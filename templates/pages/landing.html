@@ -1,0 +1,48 @@
+{# templates/pages/landing.html #}
+{% extends "base.html" %}
+
+{% block main %}
+  <!-- ヒーローセクション -->
+  <section class="bg-warning text-dark text-center py-5">
+    <div class="container">
+      <h1 class="display-4 fw-bold">NAGOYAMESHI</h1>
+      <p class="lead">
+        名古屋のB級グルメを簡単検索！<br>
+        味噌カツ、手羽先、台湾ラーメン…ここで見つけよう。
+      </p>
+      <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg mt-3">無料で始める</a>
+      <p class="mt-3">
+        すでにアカウントをお持ちの方は <a href="{% url 'account_login' %}">ログイン</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- サービス紹介セクション -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4 mb-4">
+          <h2 class="fw-bold">検索</h2>
+          <p>エリアやジャンルで名古屋B級グルメをかんたん検索。</p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h2 class="fw-bold">レビュー</h2>
+          <p>ユーザーのリアルな感想を参考にできる。</p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h2 class="fw-bold">予約</h2>
+          <p>行きたいお店をその場で予約。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTAセクション -->
+  <section class="bg-light text-center py-5">
+    <div class="container">
+      <h2 class="fw-bold">さあ、一緒においしい名古屋を探そう</h2>
+      <p class="mb-4">登録して、名古屋の美味しいの旅へ。</p>
+      <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg">アカウント作成</a>
+    </div>
+  </section>
+{% endblock %}

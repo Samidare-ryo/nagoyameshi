@@ -1,0 +1,45 @@
+<div class="py-1 bg-light ">
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container">
+      <!-- ブランド -->
+      <a class="navbar-brand" href="/">NAGOYAMESHI</a>
+
+      <!-- ハンバーガーボタン -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
+        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- メニュー -->
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
+                href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.resolver_match.url_name == 'restaurant_list' %}active{% endif %}" 
+                href="{% url 'restaurant_list' %}">店舗検索</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.resolver_match.url_name == 'mypage' %}active{% endif %}" 
+                href="{% url 'mypage' %}">Mypage</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'account_signup' %}">Signup</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
