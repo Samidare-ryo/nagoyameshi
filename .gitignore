@@ -2,4 +2,4 @@ venv/
 secrets
 **/__pycache__/**
 .is_debug
-
+/base/management/commands/dummy_user.py

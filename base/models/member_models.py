@@ -88,6 +88,10 @@ class Member(AbstractUser):
         validators=[katakana_validator],
     )
 
+    zipcode = models.CharField(max_length=10, blank=True, null=True)
+    job = models.CharField(max_length=100, blank=True, null=True)
+    birthday = models.DateField(blank=True, null=True)
+
     # 作成・更新日時
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="作成日")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="更新日")

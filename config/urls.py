@@ -18,6 +18,7 @@ Including another URLconf
 # nagoyameshi/config/urls.py
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import TemplateView
 from base.views.landing_views import landing_page
 from base.views.home_views import home_page, restaurant_search_view
 from base.views.mypage_views import (
