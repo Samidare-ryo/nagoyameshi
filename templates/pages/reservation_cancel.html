@@ -1,0 +1,47 @@
+{# templates/reservation/reservation_cancel.html #}
+{% extends "base.html" %}
+
+{% block main %}
+<div class="max-w-3xl mx-auto my-10 px-4">
+
+    <h1 class="text-3xl font-bold mb-6 text-accent1">予約キャンセル</h1>
+
+    <p class="mb-4">以下の予約をキャンセルします。本当に実行してよろしいですか？</p>
+
+    <ul class="mb-6 border rounded-lg divide-y divide-gray-200 bg-white shadow">
+        <li class="px-4 py-2"><strong>店舗名:</strong> {{ reservation.restaurant.name }}</li>
+        <li class="px-4 py-2"><strong>予約日時:</strong> {{ reservation.reserved_at }}</li>
+        <li class="px-4 py-2"><strong>人数:</strong> {{ reservation.number_of_people }}</li>
+        {% if reservation.note %}
+        <li class="px-4 py-2"><strong>備考:</strong> {{ reservation.note }}</li>
+        {% endif %}
+    </ul>
+
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <div>
+            <label class="block mb-2 font-semibold">キャンセル理由</label>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center">
+                    <input type="radio" name="cancel_reason" id="reason_user" value="user" required class="form-radio text-accent2">
+                    <label for="reason_user" class="ml-2">ユーザー都合</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="radio" name="cancel_reason" id="reason_restaurant" value="restaurant" class="form-radio text-accent2">
+                    <label for="reason_restaurant" class="ml-2">店舗都合</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex gap-4">
+            <button type="submit" class="bg-accent2 text-white px-6 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+                キャンセルする
+            </button>
+            <a href="{% url 'reservation_list' %}" class="bg-accent2 text-white px-6 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+                戻る
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

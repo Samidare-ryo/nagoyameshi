@@ -7,8 +7,11 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
+from django.core.mail import send_mail
+from base.models.member_models import Member
 from dateutil.relativedelta import relativedelta
-
+from django.core.mail import send_mail
+import secrets
 
 Member = get_user_model()
 
@@ -128,3 +131,37 @@ def downgrade_if_expired(member: Member) -> Member:
 # Memberインスタンスに対して、有料会員かどうかを判定
 def is_subscribed_member_instance(member: Member) -> bool:
     return getattr(member, "is_subscribed", False)
+
+
+# メール認証トークン生成
+def generate_email_verification_token() -> str:
+    return secrets.token_urlsafe(32)
+
+
+# メール送信
+def send_verification_email(member: Member):
+    token = generate_email_verification_token()
+    member.email_verification_token = token
+    member.email_verification_sent_at = timezone.now()
+    member.save()
+
+    verification_link = f"https://example.com/verify_email/{token}/"
+    send_mail(
+        subject="メールアドレス確認",
+        message=f"下記リンクをクリックしてメールアドレスを認証してください。\n{verification_link}",
+        from_email="noreply@example.com",
+        recipient_list=[member.email],
+    )
+
+
+# トークンでメール認証
+def verify_email_token(token: str) -> bool:
+    try:
+        member = Member.objects.get(email_verification_token=token)
+    except Member.DoesNotExist:
+        return False
+
+    member.is_email_verified = True
+    member.email_verification_token = None
+    member.save()
+    return True

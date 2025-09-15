@@ -1,0 +1,78 @@
+{# templates/pages/mypage.html #}
+{% extends "base.html" %}
+
+{% block main %}
+<div class="max-w-4xl mx-auto my-10 px-4">
+
+  <h1 class="text-3xl font-bold mb-6">マイページ</h1>
+
+  <!-- 1. 会員情報 -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold mb-3">会員情報</h2>
+    <p class="mb-1">名前: {{ user.username }}</p>
+    <p class="mb-1">メールアドレス: {{ user.email }}</p>
+    <p class="mb-3">会員ID: {{ user.id }}</p>
+
+    {% if not user.subscription %}
+      <a href="{% url 'subscribe' %}" class="inline-block bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition mb-2">
+        サブスク契約へ
+      </a>
+    {% else %}
+      <p class="mb-2">サブスク有効期限: {{ user.subscription.expire_date }}</p>
+      <a href="{% url 'unsubscribe' %}" class="inline-block bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition mb-2">
+        サブスク解約へ
+      </a>
+    {% endif %}
+
+    <div class="flex flex-col sm:flex-row gap-2 mt-2">
+      <a href="{% url 'member_edit' %}" class="bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+        会員情報編集
+      </a>
+    </div>
+  </section>
+
+  <!-- 2. お気に入り -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold mb-3">お気に入り</h2>
+    <p class="mb-2">登録した飲食店の一覧を確認できます。</p>
+    <a href="{% url 'favorites_list' %}" class="inline-block bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+      お気に入り一覧へ
+    </a>
+  </section>
+
+  <!-- 3. 予約状況 -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold mb-3">予約状況</h2>
+    <p class="mb-2">予約済みのお店の確認・キャンセル・変更ができます。</p>
+    <a href="{% url 'reservation_list' %}" class="inline-block bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+      予約一覧へ
+    </a>
+  </section>
+
+  <!-- 4. レビュー -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold mb-3">レビュー履歴</h2>
+    <p class="mb-2">投稿したレビューの編集・削除ができます。</p>
+    <a href="{% url 'review_list' %}" class="inline-block bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+      レビュー一覧へ
+    </a>
+  </section>
+
+  <!-- 5. アカウント設定 -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold mb-3">アカウント設定</h2>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <a href="{% url 'member_edit' %}" class="bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+        プロフィール編集
+      </a>
+      <a href="{% url 'password_change' %}" class="border border-gray-500 text-gray-500 px-4 py-2 rounded-lg shadow hover:bg-gray-500 hover:text-white transition">
+        パスワード変更
+      </a>
+      <a href="{% url 'account_delete_confirm' %}" class="border border-red-600 text-red-600 px-4 py-2 rounded-lg shadow hover:bg-red-600 hover:text-white transition">
+        退会する
+      </a>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

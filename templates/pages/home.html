@@ -1,0 +1,39 @@
+{# templates/pages/home.html #}
+{% extends "base.html" %}
+
+{% block main %}
+<div class="max-w-6xl mx-auto px-4 py-5">
+
+    <!-- レストラン検索フォーム -->
+    <section class="mb-5">
+        <form method="GET" action="{% url 'restaurant_search' %}" class="flex space-x-2">
+            <input type="text" name="keyword" class="flex-grow px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent2" placeholder="ジャンルや料理名で検索" value="{{ params.keyword|default:'' }}">
+            <button type="submit" class="bg-accent2 text-white font-semibold px-6 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+                検索
+            </button>
+        </form>
+    </section>
+
+    <!-- 無料会員向け案内 -->
+    {% if membership_type != "subscribed" and premium_info %}
+    <section class="mb-5 p-4 bg-card text-white rounded-lg shadow">
+        <p class="mb-0">{{ premium_info.message }} 
+            <a href="{{ premium_info.link }}" class="underline hover:text-accent2">こちらからアップグレード</a>
+        </p>
+    </section>
+    {% endif %}
+
+    <!-- レストラン一覧 -->
+    <section>
+        <h2 class="text-2xl font-bold mb-4 text-accent1">おすすめレストラン</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for restaurant in restaurants %}
+            {% include 'snippets/item_box.html' with restaurant=restaurant %}
+            {% empty %}
+            <p class="text-center w-full">登録されたレストランはまだありません。</p>
+            {% endfor %}
+        </div>
+    </section>
+
+</div>
+{% endblock %}

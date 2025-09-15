@@ -19,11 +19,59 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from base.views.landing_views import landing_page
+from base.views.home_views import home_page, restaurant_search_view
+from base.views.mypage_views import (
+    mypage,
+    reservation_history,
+    review_history,
+    favorite_list,
+    account_delete_confirm,
+    account_delete,
+)
+
+# urls.py
+from base.views.account_views import (
+    CustomPasswordChangeView,
+    CustomPasswordResetView,
+    email_verification_request,
+)
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),  # allauthのため追加
     path("", landing_page, name="landing"),
-    # path("home/", home, name="home"),
+    path("home/", home_page, name="home"),
+    path("serch_result/", restaurant_search_view, name="search_result"),
+    # マイページ関連
+    path("mypage/", mypage, name="mypage"),  # マイページトップ
+    path(
+        "mypage/reservations/", reservation_history, name="reservation_list"
+    ),  # 予約履歴
+    path("mypage/reviews/", review_history, name="review_list"),  # レビュー履歴
+    path("mypage/favorites/", favorite_list, name="favorite_list"),  # お気に入り一覧
+    path(
+        "mypage/account_delete_confirm/",
+        account_delete_confirm,
+        name="account_delete_confirm",
+    ),  # 退会確認
+    path("mypage/account_delete/", account_delete, name="account_delete"),  # 退会実行
+    # パスワード変更
+    path(
+        "accounts/password_change/",
+        CustomPasswordChangeView.as_view(),
+        name="password_change",
+    ),
+    # パスワードリセット（メール送信）
+    path(
+        "accounts/password_reset/",
+        CustomPasswordResetView.as_view(),
+        name="password_reset",
+    ),
+    # メール認証リクエスト
+    path(
+        "accounts/email_verification/",
+        email_verification_request,
+        name="email_verification_request",
+    ),
 ]

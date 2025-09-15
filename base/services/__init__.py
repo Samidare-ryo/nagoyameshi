@@ -6,10 +6,11 @@ from .review_service import *
 from .favorite_service import *
 from .member_service import *
 from .restaurant_service import *
-from .serch_service import *
+from .search_service import *
 from .subscription_service import *
 from .notification_service import *
 from .mypage_service import *
+
 
 __all__ = [
     "home_service",

@@ -1,0 +1,88 @@
+{# templates/reservation/reservation_create.html #}
+{% extends "base.html" %}
+
+{% block main %}
+<div class="max-w-3xl mx-auto my-10 px-4">
+
+    <h1 class="text-3xl font-bold mb-6 text-accent1">予約する - {{ restaurant.name }}</h1>
+
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- 予約日 -->
+        <div>
+            <label for="reserved_at_date" class="block mb-2 font-semibold text-accent1">予約日</label>
+            <input type="date" id="reserved_at_date" name="reserved_at_date"
+                   class="w-full border-2 border-accent2 bg-accent2/10 rounded-lg px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent2 focus:border-accent2"
+                   required>
+        </div>
+
+        <!-- 予約時間 -->
+        <div>
+            <label for="reserved_at_time" class="block mb-2 font-semibold text-accent1">予約時間</label>
+            <select id="reserved_at_time" name="reserved_at_time"
+                    class="w-full border-2 border-accent2 bg-accent2/10 rounded-lg px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent2 focus:border-accent2"
+                    required>
+                <!-- 時間リストはJSで生成 -->
+            </select>
+        </div>
+
+        <!-- 人数 -->
+        <div>
+            <label for="number_of_people" class="block mb-2 font-semibold text-accent1">人数</label>
+            <input type="number" id="number_of_people" name="number_of_people" min="1" max="20"
+                   class="w-full border-2 border-accent2 bg-accent2/10 rounded-lg px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent2 focus:border-accent2"
+                   required>
+        </div>
+
+        <!-- 備考 -->
+        <div>
+            <label for="note" class="block mb-2 font-semibold text-accent1">備考（任意）</label>
+            <textarea id="note" name="note" rows="3" placeholder="アレルギーやリクエストなど"
+                      class="w-full border-2 border-accent2 bg-accent2/10 rounded-lg px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent2 focus:border-accent2"></textarea>
+        </div>
+
+        <!-- 送信ボタン -->
+        <div class="flex gap-4">
+            <button type="submit" class="bg-accent2 text-white px-6 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+                予約を確定する
+            </button>
+            <a href="{% url 'restaurant_detail' restaurant_id %}" 
+               class="bg-accent2 text-white px-6 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+                キャンセル
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+    // 予約時間（10分刻み）を生成
+    const select = document.getElementById('reserved_at_time');
+    for (let h = 10; h <= 21; h++) {  // 10:00～21:50まで
+        for (let m = 0; m < 60; m += 10) {
+            let hh = h.toString().padStart(2, '0');
+            let mm = m.toString().padStart(2, '0');
+            let option = document.createElement('option');
+            option.value = hh + ':' + mm;
+            option.textContent = hh + ':' + mm;
+            select.appendChild(option);
+        }
+    }
+
+    // 送信時に日時を結合してPOST
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const date = document.getElementById('reserved_at_date').value;
+        const time = document.getElementById('reserved_at_time').value;
+        if (date && time) {
+            const reserved_at_input = document.createElement('input');
+            reserved_at_input.type = 'hidden';
+            reserved_at_input.name = 'reserved_at';
+            reserved_at_input.value = date + ' ' + time;
+            form.appendChild(reserved_at_input);
+        }
+    });
+</script>
+{% endblock %}

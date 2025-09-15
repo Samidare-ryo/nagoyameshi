@@ -1,14 +1,14 @@
 {% load static %}
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>{% block title %}NAGOYAMESHI{% endblock %}</title>
 
-    <!-- SEO & SNS対応 -->
+  <!-- SEO & SNS対応 -->
   <meta name="description" content="名古屋のご当地グルメを紹介">
   <meta property="og:title" content="NAGOYAMESHI">
   <meta property="og:description" content="名古屋めしの魅力を紹介！">
@@ -19,41 +19,55 @@
   <!-- Favicon -->
   <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
 
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg-base': '#eaf4fc',         // 背景ベース（月白）
+            'card': '#0f2350',            // カード／ボックス（濃藍）
+            'header-footer': '#001A43',   // ヘッダー／フッター（紺）
+            'accent1': '#0f2350',            // アクセント１（濃藍）
+            'accent2': '#4A7AC7',          // アクセント２（明るめ青）
+          }
+        }
+      }
+    }
+  </script>
 
-
-  <!-- Bootstrap CSS 5.3.7 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-
-
+  <!-- 共通CSS -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
   {% block extra_head %}{% endblock %}
 </head>
-<body>
-  <header role="banner">
-    {% block header %}
-      {% include 'snippets/header.html' %}
-    {% endblock %}
+<body class="flex flex-col min-h-screen bg-bg-base text-gray-800">
+  <!-- ヘッダー -->
+  <header class="bg-header-footer text-white shadow">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      {% block header %}
+        {% include 'snippets/header.html' %}
+      {% endblock %}
+    </div>
   </header>
 
-  <main class="container mt-4" role="main">
+  <!-- メイン -->
+  <main class="flex-grow container mx-auto px-4 mt-8" role="main">
     {% block main %}{% endblock %}
   </main>
 
-  <footer class="container mt-5" role="contentinfo">
-    {% block footer %}
-      {% include 'snippets/footer.html' %}
-    {% endblock %}
+  <!-- フッター -->
+  <footer class="bg-header-footer text-gray-100 mt-12 py-6" role="contentinfo">
+    <div class="container mx-auto px-4 text-center">
+      {% block footer %}
+        {% include 'snippets/footer.html' %}
+      {% endblock %}
+    </div>
   </footer>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-sghKjJbk8dX03ZJg6oY+fE/bU+VYslDkoydTs+zvHwXmtZ2JQTRoyCEhfUB2VX6I" crossorigin="anonymous"></script>
-
-    <!-- 共通 JS -->
+  <!-- 共通 JS -->
   <script src="{% static 'js/main.js' %}"></script>
-
   {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -1,0 +1,70 @@
+{# templates/pages/member_edit.html #}
+{% extends "base.html" %}
+
+{% block main %}
+<div class="max-w-4xl mx-auto my-10 px-4">
+
+  <h1 class="text-3xl font-bold mb-6">会員情報編集</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    
+    <!-- 名前 -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-semibold mb-1">姓</label>
+      <input type="text" name="last_name" value="{{ user.last_name }}" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 font-semibold mb-1">名</label>
+      <input type="text" name="first_name" value="{{ user.first_name }}" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+    </div>
+
+    <!-- フリガナ -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-semibold mb-1">セイ（カタカナ）</label>
+      <input type="text" name="last_name_kana" value="{{ user.last_name_kana }}" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 font-semibold mb-1">メイ（カタカナ）</label>
+      <input type="text" name="first_name_kana" value="{{ user.first_name_kana }}" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+    </div>
+
+    <!-- 連絡先 -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-semibold mb-1">メールアドレス</label>
+      <input type="email" name="email" value="{{ user.email }}" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 font-semibold mb-1">電話番号</label>
+      <input type="text" name="phone_number" value="{{ user.phone_number }}" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 font-semibold mb-1">住所</label>
+      <input type="text" name="address" value="{{ user.address }}" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+    </div>
+
+    <!-- 会員種別 -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-semibold mb-1">会員種別</label>
+      <input type="text" value="{{ user.membership_type.name }}" readonly class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100">
+    </div>
+
+    <!-- サブスク状態 -->
+    <div class="mb-6">
+      <label class="block text-gray-700 font-semibold mb-1">サブスク状態</label>
+      {% if user.is_subscribed %}
+        <p class="px-3 py-2 bg-green-100 text-green-800 rounded-lg">有効（{{ user.subscription_expiry|date:"Y/m/d" }}まで）</p>
+      {% else %}
+        <p class="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg">未契約</p>
+      {% endif %}
+    </div>
+
+    <!-- ボタン -->
+    <div class="flex gap-2">
+      <button type="submit" class="bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition">保存</button>
+      <a href="{% url 'mypage' %}" class="border border-gray-500 text-gray-500 px-4 py-2 rounded-lg shadow hover:bg-gray-500 hover:text-white transition">キャンセル</a>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

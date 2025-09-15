@@ -12,19 +12,31 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import environ  # 追記
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+if os.path.exists(BASE_DIR / ".is_debug"):
+    DEBUG = True
+else:
+    DEBUG = False
+
 
 # 追記----
 env = environ.Env()
 root = environ.Path(BASE_DIR / "secrets")
 
-# 本番環境用
-# env.read_env(root('.env.prod'))
+if DEBUG:
+    # 開発環境用
+    env.read_env(root(".env.dev"))
 
-# 開発環境用
-env.read_env(root(".env.dev"))
+else:
+    # 本番環境用
+    env.read_env(root(".env.prod"))
+
+print(DEBUG)
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -56,10 +68,6 @@ INSTALLED_APPS = [
     # "allauth.account.middleware.AccountMiddleware",
 ]
 
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -68,6 +76,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -83,6 +96,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # `allauth` needs this from django
+                "django.template.context_processors.request",
             ],
         },
     },
@@ -162,17 +177,18 @@ ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 # ログインがロックされた後に再試行できるまでの時間
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
 
-"""
-# メール機能の追加(本番環境)
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")  # メールパスワードはsecretsより
-"""
+if DEBUG:
+    # 開発環境用メール　通知設定
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    AUTH_USER_MODEL = "base.Member"
 
-# 開発環境用メール通知設定（本番環境ではコメントアウトする）
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-AUTH_USER_MODEL = "base.Member"
+else:
+    # 本番環境メール　通知設定
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = env.str(
+        "EMAIL_HOST_PASSWORD"
+    )  # メールパスワードはsecretsより

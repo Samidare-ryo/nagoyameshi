@@ -1,0 +1,120 @@
+{# templates/restaurant/restaurant_detail.html #}
+{% extends "base.html" %}
+
+{% block main %}
+<div class="max-w-5xl mx-auto my-10 px-4 space-y-6">
+
+    <!-- 店舗基本情報 -->
+    <div class="space-y-3">
+        <h1 class="text-3xl font-bold text-accent1">{{ restaurant.name }}</h1>
+
+        <!-- 予約ボタン（上部） -->
+        <div>
+            <a href="{% url 'reservation_create' restaurant.id %}"
+               class="inline-block bg-accent2 text-white px-6 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+                予約する
+            </a>
+        </div>
+
+        <p>{{ restaurant.description }}</p>
+        <p><strong>電話番号:</strong> {{ restaurant.phone_number }}</p>
+        {% if restaurant.email %}
+        <p><strong>メール:</strong> {{ restaurant.email }}</p>
+        {% endif %}
+        <p><strong>平均予算:</strong> ¥{{ restaurant.budget|intcomma }}</p>
+        <p>
+            <strong>カテゴリ:</strong> 
+            <span class="inline-block bg-accent2 text-white px-2 py-1 rounded-full text-sm">
+                {{ restaurant.category.name if restaurant.category else "なし" }}
+            </span>
+        </p>
+        <p>
+            <strong>タグ:</strong>
+            {% for tag in restaurant.tags.all %}
+                <span class="inline-block bg-accent2 text-white px-2 py-1 rounded-full text-sm mr-1">{{ tag.name }}</span>
+            {% empty %}
+                なし
+            {% endfor %}
+        </p>
+    </div>
+
+    <!-- 画像表示: 外観 / 内装 / 料理 -->
+    {% for section, images, title in 
+        [('外観', restaurant.images.filter(image_type="exterior"), '外観'),
+         ('内装', restaurant.images.filter(image_type="interior"), '内装'),
+         ('料理', restaurant.images.filter(image_type="food").order_by('-created_at')|slice:":3", '料理（最新3枚）')] %}
+        <div>
+            <h3 class="text-xl font-semibold mb-2">{{ title }}</h3>
+            {% if images.exists %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    {% for img in images %}
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            {% if img.image %}
+                                <img src="{{ img.image.url }}" alt="{{ img.caption }}" class="w-full h-48 object-cover">
+                            {% else %}
+                                <div class="p-4 text-center text-gray-400">画像なし</div>
+                            {% endif %}
+                            <div class="p-2">
+                                <p class="text-sm text-gray-700">
+                                    {% if img.caption %}
+                                        {{ img.caption }}
+                                    {% else %}
+                                        {{ img.get_image_type_display }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>画像は登録されていません。</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <!-- 予約ボタン（中部） -->
+    <div>
+        <a href="{% url 'reservation_create' restaurant.id %}"
+           class="inline-block bg-accent2 text-white px-6 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+            予約する
+        </a>
+    </div>
+
+    <!-- 定休日・特別休日 -->
+    <div class="space-y-2">
+        <div>
+            <h3 class="text-lg font-semibold">定休日</h3>
+            {% if restaurant.regular_holiday.exists %}
+                {% for day in restaurant.regular_holiday.all %}
+                    <span class="inline-block bg-accent2 text-white px-2 py-1 rounded-full text-sm mr-1">{{ day.day_of_week }}</span>
+                {% endfor %}
+            {% else %}
+                なし
+            {% endif %}
+        </div>
+
+        <div>
+            <h3 class="text-lg font-semibold mt-2">特別休日</h3>
+            {% if restaurant.special_holiday.exists %}
+                {% for day in restaurant.special_holiday.all %}
+                    <span class="inline-block bg-yellow-300 text-gray-800 px-2 py-1 rounded-full text-sm mr-1">{{ day.date }}</span>
+                {% endfor %}
+            {% else %}
+                なし
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- お気に入りボタン -->
+    <div>
+        <form method="post" action="{% url 'favorite_toggle' restaurant.id %}">
+            {% csrf_token %}
+            <button type="submit" 
+                    class="bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+                お気に入り登録／解除
+            </button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{# templates/pages/search_result.html #}
+{% extends "base.html" %}
+
+{% block main %}
+<section class="py-10 bg-bg-base">
+  <div class="max-w-6xl mx-auto px-4">
+
+    <!-- 検索フォーム -->
+    <form method="get" action="{% url 'restaurant_search' %}" class="flex flex-wrap justify-center gap-4 mb-8">
+      <input type="text" name="keyword" 
+             class="px-4 py-2 rounded-lg shadow border border-gray-300 focus:ring-2 focus:ring-accent2 focus:border-accent2 flex-1 min-w-[200px]" 
+             placeholder="キーワードを入力" value="{{ params.keyword }}">
+      
+      <select name="category_id" 
+              class="px-4 py-2 rounded-lg shadow border border-gray-300 focus:ring-2 focus:ring-accent2 focus:border-accent2 flex-1 min-w-[150px]">
+        <option value="">カテゴリ選択</option>
+        {% for cat in categories %}
+          <option value="{{ cat.id }}" {% if params.category_id == cat.id|stringformat:"s" %}selected{% endif %}>
+            {{ cat.name }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <button type="submit" 
+              class="bg-accent2 text-white px-6 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+        検索
+      </button>
+    </form>
+
+    <h2 class="text-2xl font-bold text-center mb-6">検索結果</h2>
+
+    {% if restaurants %}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% for r in restaurants %}
+          <div class="bg-accent2/10 rounded-lg shadow overflow-hidden">
+            <div class="p-4">
+              <h5 class="text-lg font-semibold mb-2">{{ r.name }}</h5>
+              <p class="text-gray-800 text-sm mb-2">
+                カテゴリ: {{ r.category }}<br>
+                平均評価: {% if r.avg_rating %}{{ r.avg_rating|floatformat:1 }}{% else %}-{% endif %}<br>
+                平均価格: ¥{{ r.average_price }}
+              </p>
+            </div>
+            <div class="p-4 text-right">
+              <a href="{% url 'restaurant_detail' r.id %}" 
+                 class="inline-block bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition text-sm">
+                詳細
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- ページネーション -->
+      {% if total_pages > 1 %}
+        <nav class="mt-8 flex justify-center">
+          <ul class="inline-flex -space-x-px">
+            {% for p in total_pages|make_list %}
+              <li>
+                <a href="?page={{ p }}{% if params.keyword %}&keyword={{ params.keyword }}{% endif %}{% if params.category_id %}&category_id={{ params.category_id }}{% endif %}" 
+                   class="px-3 py-1 border rounded-l-lg border-gray-300 {% if page == p %}bg-accent2 text-white{% else %}bg-white text-gray-700 hover:bg-accent2/20{% endif %} transition">
+                  {{ p }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
+
+    {% else %}
+      <p class="text-center text-gray-500">検索結果はありません。</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

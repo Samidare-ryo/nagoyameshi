@@ -1,0 +1,50 @@
+{# templates/review/review_list.html #}
+{% extends "base.html" %}
+
+{% block main %}
+<div class="max-w-4xl mx-auto my-10 px-4">
+
+  <h1 class="text-3xl font-bold mb-6">自分のレビュー一覧</h1>
+
+  {% if reviews %}
+    <div class="space-y-6">
+      {% for review in reviews %}
+      <div class="bg-accent1/20 p-4 rounded-lg shadow">
+        <div class="flex justify-between items-start">
+          <div>
+            <h2 class="text-xl font-semibold text-accent2">{{ review.restaurant_name }}</h2>
+            <p class="mt-1 text-gray-700">{{ review.content }}</p>
+            <p class="mt-1 text-gray-600">評価:
+              {% for i in "12345"|make_list %}
+                {% if i|int <= review.rating %}
+                  <span class="text-yellow-400">★</span>
+                {% else %}
+                  <span class="text-gray-300">★</span>
+                {% endif %}
+              {% endfor %}
+            </p>
+            <p class="mt-1 text-gray-500 text-sm">投稿日: {{ review.created_at|date:"Y/m/d H:i" }}</p>
+          </div>
+          <div class="ml-4">
+            <a href="{% url 'review_edit' review.review_id %}" 
+               class="px-4 py-2 rounded-lg bg-accent2 text-white text-sm font-semibold shadow hover:bg-accent2/80 transition">
+              編集／削除
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-center text-gray-500">まだ投稿したレビューはありません。</p>
+  {% endif %}
+
+  <div class="mt-6">
+    <a href="{% url 'restaurant_list' %}"
+       class="inline-block px-6 py-2 rounded-lg bg-accent2 text-white font-semibold shadow hover:bg-accent2/80 transition">
+      店舗一覧へ戻る
+    </a>
+  </div>
+
+</div>
+{% endblock %}

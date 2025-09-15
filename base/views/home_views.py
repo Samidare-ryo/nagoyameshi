@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from base.services.serch_service import search_restaurants
+from base.services.search_service import search_restaurants
 from base.services.home_service import (
     get_home_data_for_free,
     get_home_data_for_subscribed,

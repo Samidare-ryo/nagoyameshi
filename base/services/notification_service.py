@@ -1,4 +1,4 @@
-# nagoyameshi/sbase/ervices/notification_service.py
+# nagoyameshi/base/ervices/notification_service.py
 from django.utils import timezone
 from base.models.member_models import Member
 from base.models.restaurant_models import Restaurant

@@ -1,10 +1,10 @@
-# bnagoyameshi/ase/views/reservation_views.py
+# nagoyameshi/views/reservation_views.py
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from base.utils.decorators import subscribe_required
 from base.services.reservation_service import (
-    get_user_reservations,
+    get_member_reservations,
     create_reservation,
     cancel_reservation,
 )
@@ -12,7 +12,7 @@ from base.services.reservation_service import (
 
 @subscribe_required
 def reservation_list(request):
-    reservations = get_user_reservations(request.user)
+    reservations = get_member_reservations(request.user)
     return render(
         request, "reservation/reservation_list.html", {"reservations": reservations}
     )

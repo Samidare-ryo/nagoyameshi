@@ -17,7 +17,7 @@ class ReservationError(Exception):
 
 
 # 予約作成（有料会員のみ、重複チェックあり）
-def create_reservation(member_id: str, restaurant_id: str, reservation_time):
+def create_reservation(member_id: str, restaurant_id: str, reserved_at):
     try:
         member = Member.objects.get(pk=member_id)
     except Member.DoesNotExist:
@@ -26,9 +26,7 @@ def create_reservation(member_id: str, restaurant_id: str, reservation_time):
     if not member.is_paid:
         raise ReservationError("有料会員のみ予約可能です")
 
-    if Reservation.objects.filter(
-        member=member, reservation_time=reservation_time
-    ).exists():
+    if Reservation.objects.filter(member=member, reserved_at=reserved_at).exists():
         raise ReservationError("同じ時間に既に予約があります")
 
     try:
@@ -39,9 +37,7 @@ def create_reservation(member_id: str, restaurant_id: str, reservation_time):
     reservation = Reservation.objects.create(
         member=member,
         restaurant=restaurant,
-        reservation_time=reservation_time,
-        status="active",
-        created_at=timezone.now(),
+        reserved_at=reserved_at,
     )
     return reservation
 
@@ -56,7 +52,7 @@ def cancel_reservation(reservation_id: str, cancel_reason: str):
     if cancel_reason not in ["user", "restaurant"]:
         raise ReservationError("キャンセル理由が不正です")
 
-    reservation.status = "canceled"
+    reservation.is_canceled = True
     reservation.cancel_reason = cancel_reason
     reservation.canceled_at = timezone.now()
     reservation.save()
@@ -69,13 +65,13 @@ def cancel_reservation(reservation_id: str, cancel_reason: str):
 # 会員の未来予約一覧
 def get_future_reservations(member_id: str):
     reservations = Reservation.objects.filter(
-        member_id=member_id, reservation_time__gte=timezone.now(), status="active"
-    ).order_by("reservation_time")
+        member_id=member_id, reserved_at__gte=timezone.now(), status="active"
+    ).order_by("reserved_at")
     return [
         {
             "reservation_id": r.id,
             "restaurant_name": r.restaurant.name,
-            "reservation_time": r.reservation_time,
+            "reserved_at": r.reserved_at,
         }
         for r in reservations
     ]
@@ -84,13 +80,13 @@ def get_future_reservations(member_id: str):
 # 会員の過去予約一覧（キャンセル以外）
 def get_past_reservations(member_id: str):
     reservations = Reservation.objects.filter(
-        member_id=member_id, reservation_time__lt=timezone.now(), status="active"
-    ).order_by("-reservation_time")
+        member_id=member_id, reserved_at__lt=timezone.now(), status="active"
+    ).order_by("-reserved_at")
     return [
         {
             "reservation_id": r.id,
             "restaurant_name": r.restaurant.name,
-            "reservation_time": r.reservation_time,
+            "reserved_at": r.reserved_at,
         }
         for r in reservations
     ]
@@ -105,7 +101,7 @@ def get_canceled_reservations(member_id: str):
         {
             "reservation_id": r.id,
             "restaurant_name": r.restaurant.name,
-            "reservation_time": r.reservation_time,
+            "reserved_at": r.reserved_at,
             "cancel_reason": r.cancel_reason,
             "canceled_at": r.canceled_at,
         }
@@ -113,5 +109,66 @@ def get_canceled_reservations(member_id: str):
     ]
 
 
-def get_user_reservations():
-    pass
+def get_member_reservations(member_id: str):
+    """
+    会員の予約一覧を取得
+    未来予約・過去予約・キャンセル済み予約をまとめて返す
+    """
+    from django.utils import timezone
+
+    # 未来予約（キャンセルされていない予約）
+    future_reservations = Reservation.objects.filter(
+        member_id=member_id, reserved_at__gte=timezone.now(), is_canceled=False
+    ).order_by("reserved_at")
+
+    # 過去予約（キャンセルされていない予約）
+    past_reservations = Reservation.objects.filter(
+        member_id=member_id, reserved_at__lt=timezone.now(), is_canceled=False
+    ).order_by("-reserved_at")
+
+    # キャンセル済み予約
+    canceled_reservations = Reservation.objects.filter(
+        member_id=member_id, is_canceled=True
+    ).order_by("-updated_at")
+
+    # 辞書形式で返す
+    return {
+        "future_reservations": [
+            {
+                "reservation_id": r.id,
+                "restaurant_name": r.restaurant.name
+                if r.restaurant
+                else "削除済み店舗",
+                "reserved_at": r.reserved_at,
+                "number_of_people": r.number_of_people,
+                "note": r.note,
+            }
+            for r in future_reservations
+        ],
+        "past_reservations": [
+            {
+                "reservation_id": r.id,
+                "restaurant_name": r.restaurant.name
+                if r.restaurant
+                else "削除済み店舗",
+                "reserved_at": r.reserved_at,
+                "number_of_people": r.number_of_people,
+                "note": r.note,
+            }
+            for r in past_reservations
+        ],
+        "canceled_reservations": [
+            {
+                "reservation_id": r.id,
+                "restaurant_name": r.restaurant.name
+                if r.restaurant
+                else "削除済み店舗",
+                "reserved_at": r.reserved_at,
+                "number_of_people": r.number_of_people,
+                "note": r.note,
+                "cancel_reason": r.cancel_reason,
+                "canceled_at": r.updated_at,
+            }
+            for r in canceled_reservations
+        ],
+    }

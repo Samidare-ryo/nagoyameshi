@@ -58,8 +58,6 @@ class Restaurant(models.Model):
     # 登録日と更新日
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # 画像
-    image = models.ImageField(default="", blank=True, upload_to=upload_image_to)
 
     # カテゴリ（1店舗 = 1カテゴリ）
     category = models.ForeignKey(
@@ -75,3 +73,32 @@ class Restaurant(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class RestaurantImage(models.Model):
+    id = models.AutoField(primary_key=True)
+
+    restaurant = models.ForeignKey(
+        Restaurant, on_delete=models.CASCADE, related_name="images"
+    )
+
+    image = models.ImageField(
+        upload_to=upload_image_to,
+        blank=True,
+        null=True,
+    )
+
+    caption = models.CharField(max_length=100, blank=True, default="")
+
+    IMAGE_TYPE_CHOICES = [
+        ("exterior", "外観"),
+        ("interior", "内装"),
+        ("food", "料理"),
+    ]
+
+    image_type = models.CharField(max_length=20, choices=IMAGE_TYPE_CHOICES, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.restaurant.name} - Image {self.id} ({self.get_image_type_display()})"

@@ -1,0 +1,67 @@
+{# templates/account/login.html #}
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block main %}
+<div class="max-w-md mx-auto my-10 px-4">
+  <h1 class="text-3xl font-bold mb-6 text-center">ログイン</h1>
+
+  <!-- メッセージ -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="mb-4 px-4 py-2 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- エラーメッセージ -->
+  {% if form.errors %}
+    <div class="mb-4 px-4 py-2 rounded-lg bg-red-100 text-red-800">
+      入力内容に誤りがあります。確認してください。
+    </div>
+  {% endif %}
+
+  <form method="post" action="{% url 'account_login' %}">
+    {% csrf_token %}
+
+    <!-- メールアドレス -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-semibold mb-1">メールアドレス</label>
+      {{ form.login|add_class:"w-full border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent2" }}
+      {% if form.login.errors %}
+        <p class="text-red-600 text-sm mt-1">{{ form.login.errors|striptags }}</p>
+      {% endif %}
+    </div>
+
+    <!-- パスワード -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-semibold mb-1">パスワード</label>
+      {{ form.password|add_class:"w-full border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent2" }}
+      {% if form.password.errors %}
+        <p class="text-red-600 text-sm mt-1">{{ form.password.errors|striptags }}</p>
+      {% endif %}
+    </div>
+
+    <!-- ログイン状態保持 -->
+    <div class="mb-4 flex items-center">
+      {{ form.remember|add_class:"mr-2" }}
+      <label class="text-gray-700">ログイン状態を保持する</label>
+    </div>
+
+    <!-- ボタン -->
+    <div class="flex flex-col gap-2">
+      <button type="submit" class="bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
+        ログイン
+      </button>
+      <a href="{% url 'password_reset' %}" class="text-sm text-accent2 hover:underline text-center">
+        パスワードを忘れた方はこちら
+      </a>
+      <a href="{% url 'account_signup' %}" class="text-sm text-accent2 hover:underline text-center">
+        新規会員登録はこちら
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

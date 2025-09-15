@@ -3,46 +3,52 @@
 
 {% block main %}
   <!-- ヒーローセクション -->
-  <section class="bg-warning text-dark text-center py-5">
-    <div class="container">
-      <h1 class="display-4 fw-bold">NAGOYAMESHI</h1>
-      <p class="lead">
+  <section class="bg-base text-gray-900 text-center py-20">
+    <div class="max-w-4xl mx-auto px-4">
+      <h1 class="text-5xl font-extrabold text-accent1">NAGOYAMESHI</h1>
+      <p class="mt-6 text-xl leading-relaxed">
         名古屋のB級グルメを簡単検索！<br>
-        味噌カツ、手羽先、台湾ラーメン…ここで見つけよう。
+        味噌煮込みうどん・味噌カツ・ひつまぶし・手羽先・きしめん<br>
+        小倉トーストもあるよ！
       </p>
-      <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg mt-3">無料で始める</a>
-      <p class="mt-3">
-        すでにアカウントをお持ちの方は <a href="{% url 'account_login' %}">ログイン</a>
+      <a href="{% url 'account_signup' %}" 
+         class="inline-block bg-accent2 text-white font-semibold px-6 py-3 mt-6 rounded-lg shadow hover:bg-accent-light transition">
+        無料で始める
+      </a>
+      <p class="mt-4">
+        すでにアカウントをお持ちの方は 
+        <a href="{% url 'account_login' %}" class="underline hover:text-accent1-light">ログイン</a>
       </p>
     </div>
   </section>
 
   <!-- サービス紹介セクション -->
-  <section class="py-5">
-    <div class="container">
-      <div class="row text-center">
-        <div class="col-md-4 mb-4">
-          <h2 class="fw-bold">検索</h2>
-          <p>エリアやジャンルで名古屋B級グルメをかんたん検索。</p>
-        </div>
-        <div class="col-md-4 mb-4">
-          <h2 class="fw-bold">レビュー</h2>
-          <p>ユーザーのリアルな感想を参考にできる。</p>
-        </div>
-        <div class="col-md-4 mb-4">
-          <h2 class="fw-bold">予約</h2>
-          <p>行きたいお店をその場で予約。</p>
-        </div>
+  <section class="bg-base py-16">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8 text-center">
+      <div class="p-6 rounded-lg shadow text-white" style="background-color:#0f2350;">
+        <h2 class="text-2xl font-bold mb-3 text-yellow-100">検索</h2>
+        <p>エリアやジャンルで名古屋B級グルメをかんたん検索。</p>
+      </div>
+      <div class="p-6 rounded-lg shadow text-white" style="background-color:#0f2350;">
+        <h2 class="text-2xl font-bold mb-3 text-yellow-100">レビュー</h2>
+        <p>ユーザーのリアルな感想を参考に。</p>
+      </div>
+      <div class="p-6 rounded-lg shadow text-white" style="background-color:#0f2350;">
+        <h2 class="text-2xl font-bold mb-3 text-yellow-100">予約</h2>
+        <p>行きたいお店をその場で予約。</p>
       </div>
     </div>
   </section>
 
   <!-- CTAセクション -->
-  <section class="bg-light text-center py-5">
-    <div class="container">
-      <h2 class="fw-bold">さあ、一緒においしい名古屋を探そう</h2>
-      <p class="mb-4">登録して、名古屋の美味しいの旅へ。</p>
-      <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg">アカウント作成</a>
+  <section class="bg-accent text-accent1 text-center py-16">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="text-3xl font-extrabold">さあ、一緒においしい名古屋を探そう</h2>
+      <p class="mt-4 text-lg">登録して、名古屋の美味しいの旅へ。</p>
+      <a href="{% url 'account_signup' %}" 
+         class="inline-block bg-accent2 text-white font-semibold px-6 py-3 mt-6 rounded-lg shadow hover:bg-accent-light transition">
+        アカウント作成
+      </a>
     </div>
   </section>
 {% endblock %}
