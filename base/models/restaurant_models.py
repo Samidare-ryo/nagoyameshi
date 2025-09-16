@@ -49,8 +49,16 @@ class Restaurant(models.Model):
         validators=[MinValueValidator(0)],
         help_text="1人あたりの平均予算（円）",
     )
+    # 郵便番号
+    zipcode = models.CharField(
+        max_length=10, blank=True, null=True, verbose_name="郵便番号"
+    )
+    # 住所
+    address = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name="住所"
+    )
     # 定休日（例: "月曜日"）
-    regular_holiday = models.ManyToManyField(Holiday, default=0)  # 複数曜日入力
+    regular_holiday = models.ManyToManyField(Holiday, blank=True)  # 複数曜日入力
     # 特別休日（例: "2025-01-01, 2025-02-11"）
     special_holiday = models.ManyToManyField(SpecialHoliday, blank=True)
     # 編集中の扱い（確定するまで掲載しない）
