@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
 from base.utils.pk_fix_generator import create_pk
-from .subscription_models import Subscription
+
 
 import secrets
 
@@ -27,10 +27,16 @@ katakana_validator = RegexValidator(
 
 # MembershipTypeモデル
 class MembershipType(models.Model):
-    code = models.CharField(
-        max_length=20, primary_key=True
-    )  # 'free', 'subscribed' など
-    name = models.CharField(max_length=50)  # 表示名
+    FREE = "free"
+    SUBSCRIBED = "subscribed"
+
+    MEMBERSHIP_CHOICES = [
+        (FREE, "Free"),
+        (SUBSCRIBED, "Subscribed"),
+    ]
+
+    code = models.CharField(max_length=20, primary_key=True, choices=MEMBERSHIP_CHOICES)
+    name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
     monthly_fee = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
@@ -49,16 +55,11 @@ class Member(AbstractUser):
     email_verification_sent_at = models.DateTimeField(blank=True, null=True)
 
     # 会員種別（無料/有料）
-    def get_default_membership_type():
-        try:
-            return MembershipType.objects.get(code="free").py
-        except (MembershipType.DoesNotExist, Exception):
-            return None  # migrate初期は存在しない
-
     membership_type = models.ForeignKey(
         MembershipType,
         on_delete=models.PROTECT,
-        default=get_default_membership_type,
+        default="free",
+        to_field="code",  # code フィールドを参照
         verbose_name="会員種別",
     )
 

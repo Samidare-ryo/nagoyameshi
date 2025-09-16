@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from faker import Faker
 import MeCab
 import ipadic
-from base.models.member_models import Member
+from base.models.member_models import Member, MembershipType
 
 
 dic_kana = {
@@ -64,6 +64,9 @@ class Command(BaseCommand):
             )
             """
 
+            # 無料会員をデフォルトで割り当てを行う。
+            default_membership = MembershipType.objects.get(code="free")
+
             # DBに保存
             member = Member.objects.create(
                 username=fake.user_name(),
@@ -78,6 +81,7 @@ class Command(BaseCommand):
                 job=job,
                 birthday=birthday,
                 is_active=True,
+                membership_type=default_membership,
             )
 
             # 確認用に出力

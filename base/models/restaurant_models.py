@@ -52,7 +52,7 @@ class Restaurant(models.Model):
     # 定休日（例: "月曜日"）
     regular_holiday = models.ManyToManyField(Holiday, default=0)  # 複数曜日入力
     # 特別休日（例: "2025-01-01, 2025-02-11"）
-    special_holiday = models.ManyToManyField(SpecialHoliday, blank=True, null=True)
+    special_holiday = models.ManyToManyField(SpecialHoliday, blank=True)
     # 編集中の扱い（確定するまで掲載しない）
     is_published = models.BooleanField(default=False)
     # 登録日と更新日

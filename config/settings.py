@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "base",  # アプリを追記
+    "widget_tweaks",  #  パッケージ追加
     # allauth　を追記
     "django.contrib.sites",
     "allauth",
