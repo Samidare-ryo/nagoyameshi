@@ -21,6 +21,13 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 from base.views.landing_views import landing_page
 from base.views.home_views import home_page, restaurant_search_view
+from base.views.restaurant_views import restaurant_list
+from base.views.subscription_views import (
+    subscribe_page,
+    subscribe_action,
+    cancel_subscription_action,
+)
+
 from base.views.mypage_views import (
     mypage,
     reservation_history,
@@ -43,6 +50,15 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),  # allauthのため追加
     path("", landing_page, name="landing"),
     path("home/", home_page, name="home"),
+    # サブスク関連
+    path("subscribe/", subscribe_page, name="subscribe"),
+    path("subscribe/join/", subscribe_action, name="subscribe_action"),
+    path(
+        "subscribe/cancel/",
+        cancel_subscription_action,
+        name="cancel_subscription_action",
+    ),
+    # 検索
     path("serch_result/", restaurant_search_view, name="search_result"),
     # マイページ関連
     path("mypage/", mypage, name="mypage"),  # マイページトップ
@@ -75,4 +91,6 @@ urlpatterns = [
         email_verification_request,
         name="email_verification_request",
     ),
+    # レストラン関係
+    path("restaurants/", restaurant_list, name="restaurant_list"),
 ]

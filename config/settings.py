@@ -17,23 +17,21 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-if os.path.exists(BASE_DIR / ".is_debug"):
-    DEBUG = True
-else:
-    DEBUG = False
 
+# environの初期化（DEBUGの型とデフォルト値を定義）
+env = environ.Env(DEBUG=(bool, False))
 
-# 追記----
-env = environ.Env()
-root = environ.Path(BASE_DIR / "secrets")
+# .is_debug による環境ファイルの選択
+env_file = (
+    BASE_DIR
+    / "secrets"
+    / (".env.dev" if (BASE_DIR / ".is_debug").exists() else ".env.prod")
+)
+env.read_env(env_file)
 
-if DEBUG:
-    # 開発環境用
-    env.read_env(root(".env.dev"))
+# .env からDEBUGを取得（ここで初めて定義）
+DEBUG = env("DEBUG")
 
-else:
-    # 本番環境用
-    env.read_env(root(".env.prod"))
 
 print(DEBUG)
 
@@ -80,8 +78,8 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -98,7 +96,6 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 # `allauth` needs this from django
-                "django.template.context_processors.request",
             ],
         },
     },
@@ -152,7 +149,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]  # 追記
 
@@ -176,12 +173,21 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # 連続してログイン失敗できる回数を5回に制限
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 # ログインがロックされた後に再試行できるまでの時間
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300  # seconds
+
+
+AUTH_USER_MODEL = "base.Member"
 
 if DEBUG:
-    # 開発環境用メール　通知設定
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-    AUTH_USER_MODEL = "base.Member"
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = env.str(
+        "EMAIL_HOST_PASSWORD"
+    )  # メールパスワードはsecretsより
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 else:
     # 本番環境メール　通知設定
@@ -193,3 +199,4 @@ else:
     EMAIL_HOST_PASSWORD = env.str(
         "EMAIL_HOST_PASSWORD"
     )  # メールパスワードはsecretsより
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

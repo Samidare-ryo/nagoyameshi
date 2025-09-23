@@ -19,7 +19,7 @@ def restaurant_list(request):
     query = request.GET.get("q", "")
     restaurants = list_restaurants(query)
     context = {"user": user, "restaurants": restaurants, "query": query}
-    return render(request, "restaurant/restaurant_list.html", context)
+    return render(request, "pages/restaurant_list.html", context)
 
 
 """
@@ -30,9 +30,7 @@ def restaurant_list(request):
 @subscribe_required
 def restaurant_detail(request, restaurant_id):
     restaurant = get_restaurant_details(restaurant_id)
-    return render(
-        request, "restaurant/restaurant_detail.html", {"restaurant": restaurant}
-    )
+    return render(request, "pages/restaurant_detail.html", {"restaurant": restaurant})
 
 
 """

@@ -22,7 +22,6 @@ def get_home_data_for_free() -> List[Dict]:
                 "id": r.id,
                 "name": r.name,
                 "category": r.category.name if r.category else None,
-                "area": r.area,
             }
         )
     return data

@@ -6,7 +6,7 @@
 
     <!-- レストラン検索フォーム -->
     <section class="mb-5">
-        <form method="GET" action="{% url 'restaurant_search' %}" class="flex space-x-2">
+        <form method="GET" action="{% url 'restaurant_list' %}" class="flex space-x-2">
             <input type="text" name="keyword" class="flex-grow px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent2" placeholder="ジャンルや料理名で検索" value="{{ params.keyword|default:'' }}">
             <button type="submit" class="bg-accent2 text-white font-semibold px-6 py-2 rounded-lg shadow hover:bg-accent2/80 transition">
                 検索

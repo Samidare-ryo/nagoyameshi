@@ -22,21 +22,24 @@ def home_page(request):
         # 無料会員向けに有料プラン案内を追加
         premium_info = {
             "message": "有料会員になるとレビューやお気に入りが利用可能です！",
-            "link": "/membership/upgrade",
+            "link": "/membership/subscribe",
         }
+    # 検索フォーム保持用のparams（keywordのみ）
+    params = {"keyword": request.GET.get("keyword", "")}
 
     # ビューに渡すコンテキスト
     context = {
         "user": user,
         "membership_type": user.membership_type,
         "restaurants": restaurants,
+        "params": params,
     }
 
     # 無料会員なら案内も追加
     if user.membership_type != "subscribed":
         context["premium_info"] = premium_info
 
-    return render(request, "home/home.html", context)
+    return render(request, "pages/home.html", context)
 
 
 """レストラン検索画面"""
@@ -68,4 +71,4 @@ def restaurant_search_view(request):
         "params": params,  # 検索フォーム保持用
     }
 
-    return render(request, "home/restaurant_search.html", context)
+    return render(request, "pages/restaurant_search.html", context)

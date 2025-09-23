@@ -1,5 +1,7 @@
 venv/
-secrets
+secrets/**
+!secrets/.env.sample
 **/__pycache__/**
 .is_debug
-/base/management/commands/dummy_user.py
+commands/**
+!commands/create_tags.py
