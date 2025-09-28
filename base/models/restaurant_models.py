@@ -39,6 +39,18 @@ class Restaurant(models.Model):
     name = models.CharField(default="", max_length=50)
     # 店舗詳細
     description = models.TextField(default="", blank=True)
+    # 開店時間・閉店時間
+
+    # 開店時間
+    opening_time = models.TimeField(
+        blank=True, null=True, verbose_name="開店時間", help_text="例: 09:00"
+    )
+
+    # 閉店時間
+    closing_time = models.TimeField(
+        blank=True, null=True, verbose_name="閉店時間", help_text="例: 22:00"
+    )
+
     # 電話番号
     phone_number = models.CharField(max_length=15, blank=True, default="")
     # 店舗メール

@@ -8,7 +8,7 @@ from base.services.review_service import (
     create_review,
     update_review,
     delete_review,
-    get_review_id,
+    get_review,
 )
 
 
@@ -34,7 +34,7 @@ def review_create(request, restaurant_id):
 
 @subscribe_required
 def review_edit(request, review_id):
-    review = get_review_id(review_id, request.user)
+    review = get_review(review_id, request.user)
     if request.method == "POST":
         success, msg = update_review(request.user, review, request.POST)
         if success:
@@ -47,7 +47,7 @@ def review_edit(request, review_id):
 
 @subscribe_required
 def review_delete(request, review_id):
-    review = get_review_id(review_id, request.user)
+    review = get_review(review_id, request.user)
     delete_review(request.user, review)
     messages.success(request, "レビューを削除しました。")
     return redirect("review_list")

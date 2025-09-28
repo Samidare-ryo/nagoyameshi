@@ -45,6 +45,8 @@ class RestaurantAdmin(admin.ModelAdmin):
         "category",
         "zipcode",
         "address",
+        "opening_time",
+        "closing_time",
         "is_published",
         "created_at",
     )

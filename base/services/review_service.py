@@ -6,7 +6,6 @@ from django.utils import timezone
 from base.models.review_models import Review
 from base.models.member_models import Member
 from base.models.restaurant_models import Restaurant
-from base.models.review_models import Review
 
 
 # レビュー捜査中に対処できないエラーが発生した場合に使用する例外
@@ -15,7 +14,9 @@ class ReviewError(Exception):
 
 
 # レビューを作成 - ratingは1〜5
-def create_review(member_id: str, restaurant_id: str, content: str, rating: int):
+def create_review(
+    member_id: str, restaurant_id: str, content: str, rating: int
+) -> Review:
     try:
         member = Member.objects.get(pk=member_id)
     except Member.DoesNotExist:
@@ -34,16 +35,14 @@ def create_review(member_id: str, restaurant_id: str, content: str, rating: int)
         restaurant=restaurant,
         content=content,
         rating=rating,
-        created_at=timezone.now(),
-        updated_at=timezone.now(),
     )
     return review
 
 
 # レビューの更新
-def update_review(review_id: str, content: str, rating: int):
+def update_review(id: str, content: str, rating: int) -> Review:
     try:
-        review = Review.objects.get(pk=review_id)
+        review = Review.objects.get(pk=id)
     except Review.DoesNotExist:
         raise ReviewError("レビューが存在しません")
 
@@ -52,15 +51,14 @@ def update_review(review_id: str, content: str, rating: int):
 
     review.content = content
     review.rating = rating
-    review.updated_at = timezone.now()
     review.save()
     return review
 
 
 # レビューを削除（論理削除なども可）
-def delete_review(review_id: str):
+def delete_review(id: str) -> bool:
     try:
-        review = Review.objects.get(pk=review_id)
+        review = Review.objects.get(pk=id)
     except Review.DoesNotExist:
         raise ReviewError("レビューが存在しません")
 
@@ -86,5 +84,5 @@ def get_member_reviews(member_id: str):
 """レビューID取得"""
 
 
-def get_review_id(review_id: str):
-    return get_object_or_404(Review, id=review_id)
+def get_review(id: str) -> Review:
+    return get_object_or_404(Review, id=id)

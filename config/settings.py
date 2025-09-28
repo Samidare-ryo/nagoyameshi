@@ -168,8 +168,6 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 # ユーザー名の登録を不要にする
 ACCOUNT_USERNAME_REQUIRED = False
-# 登録後、メールアドレスに確認メールが送信される
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # 連続してログイン失敗できる回数を5回に制限
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 # ログインがロックされた後に再試行できるまでの時間
@@ -179,6 +177,8 @@ ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300  # seconds
 AUTH_USER_MODEL = "base.Member"
 
 if DEBUG:
+    # 開発環境では、メール認証不要にする
+    ACCOUNT_EMAIL_VERIFICATION = "none"
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587
@@ -191,6 +191,8 @@ if DEBUG:
 
 else:
     # 本番環境メール　通知設定
+    # 登録後、メールアドレスに確認メールが送信される
+    ACCOUNT_EMAIL_VERIFICATION = "mandatory"
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587

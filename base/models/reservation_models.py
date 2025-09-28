@@ -41,6 +41,8 @@ class Reservation(models.Model):
 
     # キャンセルフラグ
     is_canceled = models.BooleanField(default=False)
+    canceled_at = models.DateTimeField(null=True, blank=True)
+    cancel_reason = models.CharField(max_length=20, null=True, blank=True)
 
     # 作成日時
     created_at = models.DateTimeField(auto_now_add=True)
