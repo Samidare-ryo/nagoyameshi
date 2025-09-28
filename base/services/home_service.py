@@ -13,9 +13,12 @@ from base.models.member_models import Member
 
 
 # 無料会員用ホームデータ
-def get_home_data_for_free() -> List[Dict]:
+def get_restaurant_data():
     restaurants = Restaurant.objects.all()[:20]  # 上位20件を表示
-    data = []
+    return restaurants
+
+
+"""
     for r in restaurants:
         data.append(
             {
@@ -25,10 +28,11 @@ def get_home_data_for_free() -> List[Dict]:
             }
         )
     return data
+"""
 
 
 # 有料会員ホームデータ
-def get_home_data_for_subscribed(member_id: str) -> List[Dict]:
+def get_home_data_for_subscribed(member_id: str):
     try:
         member = Member.objects.get(id=member_id)
     except Member.DoesNotExist:

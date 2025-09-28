@@ -67,7 +67,7 @@ def delete_review(id: str) -> bool:
 
 
 # 会員が投稿したレビュー一覧を取得
-def get_member_reviews(member_id: str):
+def get_member_reviews(member_id: str) -> list[dict]:
     reviews = Review.objects.filter(member_id=member_id).order_by("-created_at")
     return [
         {

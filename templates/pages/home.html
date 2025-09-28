@@ -15,10 +15,10 @@
     </section>
 
     <!-- 無料会員向け案内 -->
-    {% if membership_type != "subscribed" and premium_info %}
+    {% if user.membership_type != "subscribed" %}
     <section class="mb-5 p-4 bg-card text-white rounded-lg shadow">
-        <p class="mb-0">{{ premium_info.message }} 
-            <a href="{{ premium_info.link }}" class="underline hover:text-accent2">こちらからアップグレード</a>
+        <p class="mb-0">  有料会員はこちら
+            <a href="subscribe/" class="underline hover:text-accent2">こちらからアップグレード</a>
         </p>
     </section>
     {% endif %}
@@ -28,7 +28,7 @@
         <h2 class="text-2xl font-bold mb-4 text-accent1">おすすめレストラン</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for restaurant in restaurants %}
-            {% include 'snippets/item_box.html' with restaurant=restaurant %}
+            {% include 'snippets/item_box.html' %}
             {% empty %}
             <p class="text-center w-full">登録されたレストランはまだありません。</p>
             {% endfor %}
