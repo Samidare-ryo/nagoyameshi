@@ -51,7 +51,7 @@ urlpatterns = [
     path("", landing_page, name="landing"),
     path("home/", home_page, name="home"),
     # サブスク関連
-    path("subscribe/", subscribe_page, name="subscribe"),
+    path("pages/subscribe/", subscribe_page, name="subscribe"),
     path("subscribe/join/", subscribe_action, name="subscribe_action"),
     path(
         "subscribe/cancel/",
