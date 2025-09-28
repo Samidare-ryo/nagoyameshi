@@ -59,9 +59,9 @@ urlpatterns = [
         name="cancel_subscription_action",
     ),
     # 検索
-    path("serch_result/", restaurant_search_view, name="search_result"),
+    path("search_result/", restaurant_search_view, name="search_result"),
     # マイページ関連
-    path("mypage/", mypage, name="mypage"),  # マイページトップ
+    path("pages/mypage/", mypage, name="mypage"),  # マイページトップ
     path(
         "mypage/reservations/", reservation_history, name="reservation_list"
     ),  # 予約履歴

@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 from base.models.member_models import Member, MembershipType
 from base.models.restaurant_models import (
@@ -26,6 +27,7 @@ class MemberAdmin(admin.ModelAdmin):
         "is_subscribed",
         "created_at",
     )
+
     search_fields = ("username", "email")
     list_filter = ("membership_type", "is_active", "is_subscribed", "created_at")
     readonly_fields = ("created_at", "updated_at")
@@ -87,10 +89,19 @@ class TagAdmin(admin.ModelAdmin):
 
 
 # ===== Review 系 =====
+class ReviewForm(forms.ModelForm):
+    class Mate:
+        model = Review
+        fields = "__all__"
+        widgets = {
+            "rating": forms.RadioSelect(choices=[(i, "★" * i) for i in range(1, 6)])
+        }
+
+
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ("member", "restaurant", "rating", "created_at")
-    search_fields = ("member__username", "restaurant__name", "content")
+    search_fields = ("content", "member", "restaurant")
     list_filter = ("rating", "created_at", "updated_at")
     readonly_fields = ("created_at", "updated_at")
 

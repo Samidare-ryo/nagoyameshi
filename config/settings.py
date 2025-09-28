@@ -179,7 +179,9 @@ AUTH_USER_MODEL = "base.Member"
 if DEBUG:
     # 開発環境では、メール認証不要にする
     ACCOUNT_EMAIL_VERIFICATION = "none"
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    DEFAULT_FROM_EMAIL = "dev@example.com"  # 表示用
+    """
     EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
@@ -188,7 +190,7 @@ if DEBUG:
         "EMAIL_HOST_PASSWORD"
     )  # メールパスワードはsecretsより
     DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
+    """
 else:
     # 本番環境メール　通知設定
     # 登録後、メールアドレスに確認メールが送信される

@@ -1,7 +1,8 @@
-venv/
+venv3.13/
 secrets/**
 !secrets/.env.sample
 **/__pycache__/**
 .is_debug
 commands/**
 !commands/create_tags.py
+.vscode
