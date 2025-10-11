@@ -20,6 +20,7 @@ def subscribe_page(request):
         "current_subscription": current,
         "subscription_history": history,
         "is_subscribed": is_subscribed(member_id),
+        "subscription_fee": 300,
     }
     return render(request, "pages/subscribe.html", context)
 

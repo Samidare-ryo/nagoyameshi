@@ -16,7 +16,7 @@ from base.utils.decorators import subscribe_required
 
 def restaurant_list(request):
     user = request.user
-    query = request.GET.get("q", "")
+    query = request.GET
     restaurants = list_restaurants(query)
     context = {"user": user, "restaurants": restaurants, "query": query}
     return render(request, "pages/restaurant_list.html", context)

@@ -15,14 +15,14 @@ from base.models.favorite_models import Favorite
 # IDから単体のレストランを取得
 def get_restaurant_by_id(restaurant_id: str):
     try:
-        return Restaurant.objects.get(pk=restaurant_id, is_deleted=False)
+        return Restaurant.objects.get(pk=restaurant_id, is_published=True)
     except ObjectDoesNotExist:
         return None
 
 
 # 検索条件でレストラン一覧を取得
 def list_restaurants(filters: dict = None):
-    queryset = Restaurant.objects.filter(is_deleted=False)
+    queryset = Restaurant.objects.filter(is_published=True)
 
     if filters:
         if "genre" in filters:
@@ -57,7 +57,7 @@ def delete_restaurant(restaurant_id: str):
     restaurant = get_restaurant_by_id(restaurant_id)
     if not restaurant:
         return False
-    restaurant.is_deleted = True
+    restaurant.is_published = False
     restaurant.save()
     return True
 
@@ -101,7 +101,7 @@ def get_restaurant_details(restaurant_id: str, member=None):
 
 # キーワード検索＋フィルター処理
 def search_restaurants(keyword: str = "", filters: dict = None):
-    queryset = Restaurant.objects.filter(is_deleted=False)
+    queryset = Restaurant.objects.filter(is_published=True)
     if keyword:
         queryset = queryset.filter(
             Q(name__icontains=keyword) | Q(description__icontains=keyword)

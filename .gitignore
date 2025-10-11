@@ -1,4 +1,5 @@
 venv/
+venv3.13/
 secrets/**
 !secrets/.env.sample
 **/__pycache__/**
