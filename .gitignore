@@ -1,5 +1,6 @@
 venv/
 venv3.13/
+.vscode/
 secrets/**
 !secrets/.env.sample
 **/__pycache__/**
