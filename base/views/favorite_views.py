@@ -21,7 +21,7 @@ from base.utils.decorators import subscribe_required
 @subscribe_required
 def favorite_list(request):
     user = request.user
-    favorites = get_member_favorites(user)
+    favorites = get_member_favorites(user.id)
     context = {"user": user, "favorites": favorites}
     return render(request, "favorite/favorite_list.html", context)
 

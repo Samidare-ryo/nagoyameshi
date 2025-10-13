@@ -37,6 +37,8 @@ from base.views.mypage_views import (
     account_delete,
 )
 
+from base.views.member_views import member_edit
+
 # urls.py
 from base.views.account_views import (
     CustomPasswordChangeView,
@@ -62,6 +64,7 @@ urlpatterns = [
     path("serch_result/", restaurant_search_view, name="search_result"),
     # マイページ関連
     path("mypage/", mypage, name="mypage"),  # マイページトップ
+    path("mypage/mamber_edit/", member_edit, name="member_edit"),
     path(
         "mypage/reservations/", reservation_history, name="reservation_list"
     ),  # 予約履歴
