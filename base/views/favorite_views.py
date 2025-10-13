@@ -33,6 +33,6 @@ def favorite_toggle_view(request, restaurant_id):
     user = request.user
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
 
-    toggle_favorite(user, restaurant)
+    toggle_favorite(user.id, restaurant.id)
     messages.success(request, "お気に入りを更新しました。")
     return redirect("restaurant_detail", restaurant_id=restaurant.id)
