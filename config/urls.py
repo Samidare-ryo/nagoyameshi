@@ -22,6 +22,7 @@ from django.views.generic import TemplateView
 from base.views.landing_views import landing_page
 from base.views.home_views import home_page, restaurant_search_view
 from base.views.restaurant_views import restaurant_list
+from base.views.member_views import member_edit
 from base.views.subscription_views import (
     subscribe_page,
     subscribe_action,
@@ -62,6 +63,7 @@ urlpatterns = [
     path("serch_result/", restaurant_search_view, name="search_result"),
     # マイページ関連
     path("mypage/", mypage, name="mypage"),  # マイページトップ
+    path("mypage/member_edit/", member_edit, name="member_edit"),
     path(
         "mypage/reservations/", reservation_history, name="reservation_list"
     ),  # 予約履歴
