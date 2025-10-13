@@ -18,7 +18,6 @@ Including another URLconf
 # nagoyameshi/config/urls.py
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic import TemplateView
 from base.views.landing_views import landing_page
 from base.views.home_views import home_page, restaurant_search_view
 from base.views.restaurant_views import restaurant_list
@@ -52,7 +51,7 @@ urlpatterns = [
     path("", landing_page, name="landing"),
     path("home/", home_page, name="home"),
     # サブスク関連
-    path("pages/subscribe/", subscribe_page, name="subscribe"),
+    path("subscribe/", subscribe_page, name="subscribe"),
     path("subscribe/join/", subscribe_action, name="subscribe_action"),
     path(
         "subscribe/cancel/",

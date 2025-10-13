@@ -99,4 +99,5 @@ class Member(AbstractUser):
 
     def __str__(self):
         status = "退会済" if not self.is_active else "有効"
-        return f"{self.username} ({self.get_membership_type_display()} / {status})"
+        membership_name = self.membership_type.name if self.membership_type else "なし"
+        return f"{self.username} ({membership_name})/ {status})"

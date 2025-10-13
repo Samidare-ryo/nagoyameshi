@@ -21,7 +21,7 @@ from base.utils.decorators import subscribe_required
 @subscribe_required
 def favorite_list(request):
     user = request.user
-    favorites = get_member_favorites(user)
+    favorites = get_member_favorites(user.id)
     context = {"user": user, "favorites": favorites}
     return render(request, "favorite/favorite_list.html", context)
 
@@ -33,6 +33,6 @@ def favorite_toggle_view(request, restaurant_id):
     user = request.user
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
 
-    toggle_favorite(user, restaurant)
+    toggle_favorite(user.id, restaurant.id)
     messages.success(request, "お気に入りを更新しました。")
     return redirect("restaurant_detail", restaurant_id=restaurant.id)
