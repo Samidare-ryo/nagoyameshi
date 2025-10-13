@@ -8,6 +8,7 @@ from .reservation_views import *
 from .review_views import *
 from .favorite_views import *
 from .account_views import *
+from .member_views import *
 
 __all__ = [
     "landing_views",
@@ -18,4 +19,5 @@ __all__ = [
     "review_views",
     "favorite_views",
     "account_views",
+    "member_views",
 ]
