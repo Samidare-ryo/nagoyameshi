@@ -13,6 +13,6 @@ def get_mypage_data_for_subscribed(user, section=None):
     elif section == "reviews":
         context["reviews"] = user.review_set.all()
     elif section == "favorites":
-        context["favorites"] = user.favorite_set.all()
+        context["favorites"] = user.favorites.all()
 
     return context
