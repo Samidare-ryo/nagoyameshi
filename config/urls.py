@@ -61,10 +61,10 @@ urlpatterns = [
         name="cancel_subscription_action",
     ),
     # 検索
-    path("serch_result/", restaurant_search_view, name="search_result"),
+    path("search_result/", restaurant_search_view, name="search_result"),
     # マイページ関連
     path("mypage/", mypage, name="mypage"),  # マイページトップ
-    path("mypage/mamber_edit/", member_edit, name="member_edit"),
+    path("mypage/member_edit/", member_edit, name="member_edit"),
     path(
         "mypage/reservations/", reservation_history, name="reservation_list"
     ),  # 予約履歴
