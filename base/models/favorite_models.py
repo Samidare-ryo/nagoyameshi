@@ -29,7 +29,7 @@ class Favorite(models.Model):
         Member, on_delete=models.CASCADE, related_name="favorites"
     )
     restaurant = models.ForeignKey(
-        Restaurant, on_delete=models.CASCADE, related_name="favorited_by"
+        Restaurant, on_delete=models.CASCADE, related_name="favorite_by"
     )
 
     # 作成・更新日時

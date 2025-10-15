@@ -17,8 +17,8 @@
           <div class="flex gap-2 mt-0">
             <!-- 詳細ボタン -->
             <a href="{% url 'restaurant_detail' fav.restaurant_id %}"
-               class="px-4 py-2 rounded-lg bg-accent2 text-white text-sm font-semibold shadow hover:bg-accent2/80 transition">
-               詳細
+              class="px-4 py-2 rounded-lg bg-accent2 text-white text-sm font-semibold shadow hover:bg-accent2/80 transition">
+              詳細
             </a>
             <!-- 詳細ボタン -->
             <form method="post" action="{% url 'favorite_toggle' fav.restaurant_id %}">
@@ -38,8 +38,8 @@
 
   <div class="mt-6 text-center">
     <a href="{% url 'restaurant_list' %}"
-       class="inline-block px-6 py-2 rounded-lg bg-accent2 text-white font-semibold shadow hover:bg-accent2/80 transition">
-       店舗一覧へ戻る
+      class="inline-block px-6 py-2 rounded-lg bg-accent2 text-white font-semibold shadow hover:bg-accent2/80 transition">
+      店舗一覧へ戻る
     </a>
   </div>
 

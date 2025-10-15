@@ -52,11 +52,13 @@ def remove_favorite(member_id: str, restaurant_id: str):
 
 
 # 会員のお気に入り一覧取得
-
-
 def get_member_favorites(member_id: str):
     """会員のお気に入り一覧"""
-    favorites = Favorite.objects.filter(member_id=member_id).order_by("-created_at")
+    try:
+        member = Member.objects.get(pk=member_id)
+    except Member.DoesNotExist:
+        raise FavoriteError("会員が存在しません")
+    favorites = member.favorites.all().order_by("-created_at")
     return [
         {
             "favorite_id": f.id,
