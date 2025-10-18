@@ -105,11 +105,11 @@ urlpatterns = [
     path("restaurants/", restaurant_list, name="restaurant_list"),
     # 店舗詳細ページ
     path(
-        "restaurants/<str:restaurant_id>/",  # 例: /restaurants/RS1234567890/ のようなURL
+        "restaurants/<str:restaurant_id>/",
         restaurant_detail,
         name="restaurant_detail",
     ),
-    # お気に入りトグル (詳細ページから遷移するため、詳細の下に追加するのが自然)
+    # お気に入りトグル
     path(
         "restaurants/<str:restaurant_id>/favorite_toggle/",
         favorite_toggle,

@@ -167,7 +167,7 @@ LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGIN_METHODS = ["email"]
 
 # ユーザー登録にメールアドレスを必須にする
-ACCOUNT_SIGNUP_FIELDS = ["email"]
+ACCOUNT_SIGNUP_FIELDS = ["email", "username", "password1", "password2"]
 
 # 連続してログイン失敗できる回数を5回に制限
 ACCOUNT_RATE_LIMITS = {"login_failed": "5/300s"}
