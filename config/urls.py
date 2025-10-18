@@ -18,10 +18,13 @@ Including another URLconf
 # nagoyameshi/config/urls.py
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic import TemplateView
 from base.views.landing_views import landing_page
 from base.views.home_views import home_page, restaurant_search_view
-from base.views.restaurant_views import restaurant_list
+from base.views.restaurant_views import (
+    restaurant_list,
+    restaurant_detail,
+    favorite_toggle,
+)
 from base.views.subscription_views import (
     subscribe_page,
     subscribe_action,
@@ -96,4 +99,16 @@ urlpatterns = [
     ),
     # レストラン関係
     path("restaurants/", restaurant_list, name="restaurant_list"),
+    # 店舗詳細ページ
+    path(
+        "restaurants/<str:restaurant_id>/",  # 例: /restaurants/RS1234567890/ のようなURL
+        restaurant_detail,
+        name="restaurant_detail",
+    ),
+    # お気に入りトグル (詳細ページから遷移するため、詳細の下に追加するのが自然)
+    path(
+        "restaurants/<str:restaurant_id>/favorite_toggle/",
+        favorite_toggle,
+        name="favorite_toggle",
+    ),
 ]

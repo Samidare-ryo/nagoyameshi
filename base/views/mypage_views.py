@@ -16,21 +16,21 @@ def mypage(request):
 @subscribe_required
 def reservation_history(request):
     context = get_mypage_data_for_subscribed(request.user, section="reservations")
-    return render(request, "pages/mypage/reservation_history.html", context)
+    return render(request, "pages/reservation_history.html", context)
 
 
 @login_required
 @subscribe_required
 def review_history(request):
     context = get_mypage_data_for_subscribed(request.user, section="reviews")
-    return render(request, "pages/mypage/review_history.html", context)
+    return render(request, "pages/review_history.html", context)
 
 
 @login_required
 @subscribe_required
 def favorite_list(request):
     context = get_mypage_data_for_subscribed(request.user, section="favorites")
-    return render(request, "pages/mypage/favorite_list.html", context)
+    return render(request, "pages/favorite_list.html", context)
 
 
 @login_required

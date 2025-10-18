@@ -14,7 +14,7 @@ from base.services.reservation_service import (
 def reservation_list(request):
     reservations = get_member_reservations(request.user)
     return render(
-        request, "reservation/reservation_list.html", {"reservations": reservations}
+        request, "pages/reservation_list.html", {"reservations": reservations}
     )
 
 
@@ -25,7 +25,7 @@ def reservation_create(request, restaurant_id):
         messages.success(request, "予約が完了しました。")
         return redirect("reservation_list")
     return render(
-        request, "reservation/reservation_create.html", {"restaurant_id": restaurant_id}
+        request, "pages/reservation_create.html", {"restaurant_id": restaurant_id}
     )
 
 

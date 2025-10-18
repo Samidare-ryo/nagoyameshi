@@ -22,7 +22,7 @@ def favorite_list(request):
     user = request.user
     favorites = get_member_favorites(user.id)
     context = {"user": user, "favorites": favorites}
-    return render(request, "favorite/favorite_list.html", context)
+    return render(request, "pages/favorite_list.html", context)
 
 
 # お気に入り登録／解除

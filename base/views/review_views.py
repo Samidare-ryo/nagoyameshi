@@ -15,7 +15,7 @@ from base.services.review_service import (
 @subscribe_required
 def review_list(request):
     reviews = get_member_reviews(request.user)
-    return render(request, "review/review_list.html", {"reviews": reviews})
+    return render(request, "pages/review_list.html", {"reviews": reviews})
 
 
 @subscribe_required
@@ -27,9 +27,7 @@ def review_create(request, restaurant_id):
         else:
             messages.error(request, msg)
         return redirect("review_list")
-    return render(
-        request, "review/review_create.html", {"restaurant_id": restaurant_id}
-    )
+    return render(request, "pages/review_create.html", {"restaurant_id": restaurant_id})
 
 
 @subscribe_required
@@ -42,7 +40,7 @@ def review_edit(request, review_id):
         else:
             messages.error(request, msg)
         return redirect("review_list")
-    return render(request, "review/review_edit.html", {"review": review})
+    return render(request, "pages/review_edit.html", {"review": review})
 
 
 @subscribe_required
