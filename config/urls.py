@@ -25,6 +25,11 @@ from base.views.restaurant_views import (
     restaurant_detail,
     favorite_toggle,
 )
+from base.views.reservation_views import (
+    reservation_list,
+    reservation_create,
+    reservation_cancel,
+)
 from base.views.subscription_views import (
     subscribe_page,
     subscribe_action,
@@ -64,14 +69,13 @@ urlpatterns = [
         name="cancel_subscription_action",
     ),
     # 検索
-    path("search_result/", restaurant_search_view, name="search_result"),
+    # path("search_result/", restaurant_search_view, name="search_result"),
     # マイページ関連
     path("mypage/", mypage, name="mypage"),  # マイページトップ
     path("mypage/member_edit/", member_edit, name="member_edit"),
-    path(
-        "mypage/reservations/", reservation_history, name="reservation_list"
-    ),  # 予約履歴
+    path("mypage/reservations/", reservation_list, name="reservation_list"),  # 予約履歴
     path("mypage/reviews/", review_history, name="review_list"),  # レビュー履歴
+    # お気に入り
     path("mypage/favorites/", favorite_list, name="favorite_list"),  # お気に入り一覧
     path(
         "mypage/account_delete_confirm/",
@@ -110,5 +114,16 @@ urlpatterns = [
         "restaurants/<str:restaurant_id>/favorite_toggle/",
         favorite_toggle,
         name="favorite_toggle",
+    ),
+    # 予約関連
+    path(
+        "reservation_create/<str:restaurant_id>/",
+        reservation_create,
+        name="reservation_create",
+    ),
+    path(
+        "reservation_cancel/<str:reservation_id>/",
+        reservation_cancel,
+        name="reservation_cancel",
     ),
 ]

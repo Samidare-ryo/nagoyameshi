@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
     "base",  # アプリを追記
     "widget_tweaks",  #  パッケージ追加
     # allauth　を追記
@@ -163,15 +164,13 @@ SITE_ID = 1
 # ログイン成功後のリダイレクト先を指定
 LOGIN_REDIRECT_URL = "/"
 # ユーザー認証にメールアドレスを使用
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_LOGIN_METHODS = ["email"]
+
 # ユーザー登録にメールアドレスを必須にする
-ACCOUNT_EMAIL_REQUIRED = True
-# ユーザー名の登録を不要にする
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNUP_FIELDS = ["email"]
+
 # 連続してログイン失敗できる回数を5回に制限
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
-# ログインがロックされた後に再試行できるまでの時間
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300  # seconds
+ACCOUNT_RATE_LIMITS = {"login_failed": "5/300s"}
 
 
 AUTH_USER_MODEL = "base.Member"

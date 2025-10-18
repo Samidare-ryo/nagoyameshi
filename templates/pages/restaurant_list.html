@@ -1,71 +1,8 @@
-{# templates/reservation/reservation_list.html #}
+{# templates/pages/restaurant_list.html #}
 {% extends "base.html" %}
 
 {% block main %}
-<div class="max-w-4xl mx-auto my-10 px-4">
-
-  <h1 class="text-3xl font-bold mb-6">予約一覧</h1>
-
-  <!-- 予約中 -->
-  <h2 class="text-2xl font-semibold mb-4">予約中</h2>
-  {% if reservations.future_reservations %}
-    <div class="space-y-4 mb-8">
-      {% for r in reservations.future_reservations %}
-        <div class="bg-accent1/20 p-4 rounded-lg shadow flex justify-between items-center">
-          <div>
-            <p class="text-sm text-gray-500">{{ r.reserved_at|date:"Y/m/d H:i" }}</p>
-            <h3 class="text-lg font-semibold text-accent2">{{ r.restaurant_name }}</h3>
-            <p>人数: {{ r.number_of_people }}</p>
-            {% if r.note %}<p>備考: {{ r.note }}</p>{% endif %}
-          </div>
-          <div>
-            <a href="{% url 'reservation_cancel' r.reservation_id %}"
-               class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-semibold shadow hover:bg-red-600 transition"
-               onclick="return confirm('本当に予約をキャンセルしますか？');">
-               キャンセル
-            </a>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p class="text-gray-500 mb-8">現在予約はありません。</p>
-  {% endif %}
-
-  <!-- 過去予約 -->
-  <h2 class="text-2xl font-semibold mb-4">過去予約</h2>
-  {% if reservations.past_reservations %}
-    <div class="space-y-4 mb-8">
-      {% for r in reservations.past_reservations %}
-        <div class="bg-gray-100 p-4 rounded-lg shadow">
-          <p class="text-sm text-gray-500">{{ r.reserved_at|date:"Y/m/d H:i" }}</p>
-          <h3 class="text-lg font-semibold text-gray-700">{{ r.restaurant_name }}</h3>
-          <p>人数: {{ r.number_of_people }}</p>
-          {% if r.note %}<p>備考: {{ r.note }}</p>{% endif %}
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p class="text-gray-500 mb-8">過去予約はありません。</p>
-  {% endif %}
-
-  <!-- キャンセル済み予約 -->
-  <h2 class="text-2xl font-semibold mb-4">キャンセル済み予約</h2>
-  {% if reservations.canceled_reservations %}
-    <div class="space-y-4">
-      {% for r in reservations.canceled_reservations %}
-        <div class="bg-gray-200 p-4 rounded-lg shadow">
-          <p class="text-sm text-gray-500">{{ r.reserved_at|date:"Y/m/d H:i" }} (キャンセル日時: {{ r.canceled_at|date:"Y/m/d H:i" }})</p>
-          <h3 class="text-lg font-semibold text-gray-700">{{ r.restaurant_name }}</h3>
-          <p>人数: {{ r.number_of_people }}</p>
-          {% if r.note %}<p>備考: {{ r.note }}</p>{% endif %}
-          <p>キャンセル理由: {{ r.cancel_reason }}</p>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p class="text-gray-500">キャンセル済み予約はありません。</p>
-  {% endif %}
-
+<div>
+    {{restaurant.name}}
 </div>
 {% endblock %}

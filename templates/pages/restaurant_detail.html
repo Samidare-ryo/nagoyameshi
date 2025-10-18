@@ -1,5 +1,7 @@
-{# templates/restaurant/restaurant_detail.html #}
+{# templates/pages/restaurant_detail.html #}
 {% extends "base.html" %}
+
+{% load humanize %}
 
 {% block main %}
 <div class="max-w-5xl mx-auto my-10 px-4 space-y-6">
@@ -25,7 +27,11 @@
         <p>
             <strong>カテゴリ:</strong> 
             <span class="inline-block bg-accent2 text-white px-2 py-1 rounded-full text-sm">
-                {{ restaurant.category.name if restaurant.category else "なし" }}
+                {% if restaurant.category %}
+                    {{ restaurant.category.name }}
+                {% else %}
+                    なし
+                {% endif %} 
             </span>
         </p>
         <p>
@@ -70,7 +76,6 @@
                 <p>画像は登録されていません。</p>
             {% endif %}
         </div>
-    {% endfor %}
 
     <!-- 予約ボタン（中部） -->
     <div>
