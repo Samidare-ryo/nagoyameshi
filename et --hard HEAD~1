@@ -1,0 +1,155 @@
+[33mcommit ebde16155af1a98cd344d9e8746aa765be9a4f49[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackup-20251019[m[33m, [m[1;32mbackup-main-20251025[m[33m)[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sat Oct 25 11:33:05 2025 +0900
+
+    デバック＆（仮）お気に入りダミー
+
+[33mcommit e981a984484c98217b75b6ab737b2543dbb1196b[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Oct 19 19:52:59 2025 +0900
+
+    stripe APIキーのsecret化
+
+[33mcommit 8d22b5d074861a9b8953a7a8f67b3c599b3f9e98[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Oct 19 18:53:11 2025 +0900
+
+    stripe(途中３）
+
+[33mcommit 2ee17c759441651d05d9e9a7d3208df34e54f1bb[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Oct 19 15:55:48 2025 +0900
+
+    Stripe実装２
+
+[33mcommit 7dcfcace8da2c68f72f655b0cc1afd46a2e65149[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Oct 19 13:47:53 2025 +0900
+
+    Stripe(実装途中)
+
+[33mcommit 42839704d554749378eada48d1cd024bff79c2cc[m[33m ([m[1;32mmain[m[33m, [m[1;32mbackup-main-20251019[m[33m)[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Oct 19 08:16:49 2025 +0900
+
+    メール認証の微修正（パスワード入力追加）
+
+[33mcommit f4132b7caa00439c6c1c2b4645dfee3119a89a73[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sat Oct 18 20:32:38 2025 +0900
+
+    メール認証の設定変更・urls.pyへ予約登録と予約削除の修正
+
+[33mcommit 9bc2dafeae27bcbfe81003ef5d761f31d6c9b7d0[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sat Oct 18 16:20:36 2025 +0900
+
+    お気に入り一覧への遷移のデバック完了
+
+[33mcommit aba255c3ee4d8febf5484691c971d304dd822f76[m[33m ([m[1;32mbackup-main-20251018[m[33m)[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sat Oct 18 15:37:01 2025 +0900
+
+    member_modelsの修正（不要importの削除）
+
+[33mcommit 3b49648d39b090fd2b9a11cf374baa693514254f[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Wed Oct 15 21:51:48 2025 +0900
+
+    お気に入りのデバック３
+
+[33mcommit 82f7bcc4e044a3e4b32938491d90be112de9b048[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Wed Oct 15 21:43:52 2025 +0900
+
+    お気に入りのデバック２
+
+[33mcommit 90c3ece1e00cbd911935e55a481f20b1a9f8edad[m[33m ([m[1;32mbackup-main-20251015[m[33m)[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Wed Oct 15 21:36:29 2025 +0900
+
+    お気に入りのデバック（途中）
+
+[33mcommit 1c421ddf6e0a593e32ab3d24d17f97e4a3ae372d[m[33m ([m[1;32mbackup-main-20251013[m[33m)[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Mon Oct 13 17:10:52 2025 +0900
+
+    お気に入りのデバック
+
+[33mcommit 6f2fd0dee018b2267cf352b5ffc03b7118a337ac[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Mon Oct 13 16:54:43 2025 +0900
+
+    会員情報の再修正（誤ってバックアップを適用）
+
+[33mcommit 3135001683f300228debdf4ad638c30f53ee7e21[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Oct 12 06:01:03 2025 +0900
+
+    デバック前のバックアップ20251012
+
+[33mcommit c95baad35a65041120de7029a64e66e0ead99b9c[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Sep 28 17:04:43 2025 +0900
+
+    サブスクページへの遷移エラーの解消
+
+[33mcommit c56aeaa5e4de40b79f79bd76f38212975b06e789[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Sep 28 16:51:02 2025 +0900
+
+    サブスクページへの遷移エラーの解消
+
+[33mcommit ee94e5dbc4fe0e6a849b5cd121339fa07a2493cb[m[33m ([m[1;32mfix-subscribe-20250928[m[33m, [m[1;32mbackup-main-20250928[m[33m, [m[1;32mbackup-local-main-20250928-SQL[m[33m)[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Sep 28 11:36:28 2025 +0900
+
+    pythonのアップグレードに伴う仮想環境再構築
+
+[33mcommit e469d03e05d0478078a831755af819d26d773999[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Sep 28 09:28:58 2025 +0900
+
+    レストランモデル修正
+
+[33mcommit 8d1e5b3d99a27986e6489a6dbb7e196af6aa2d22[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Tue Sep 23 21:48:03 2025 +0900
+
+    ダミーデータを注入、subscription_views.pyを作成
+
+[33mcommit 0dd954c41c4c7e4ad0edb058281be6770944d8eb[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Tue Sep 16 21:47:20 2025 +0900
+
+    adminの作成、店舗の郵便番号・住所の作成
+
+[33mcommit 06737e4ad0a66aefce09b9a97ca6180bf4019742[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Tue Sep 16 20:55:51 2025 +0900
+
+    modelsの修正
+
+[33mcommit 7cad3f6bc8d2efeb780b6bc5daab359cdfd0de70[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Tue Sep 16 07:40:18 2025 +0900
+
+    member_models 誕生日・郵便番号・職業追加
+
+[33mcommit ea02521383af3c4e4a50893dda8b457b9d22d494[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Mon Sep 15 21:00:48 2025 +0900
+
+    DBのリセット、htmlの作成
+
+[33mcommit ee4e9fa61896c0f55acc72b5522a2c982adee35d[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Sep 14 08:29:49 2025 +0900
+
+    requirementsテキスト追加
+
+[33mcommit 768bac1665f02c48fd326d89c6c36babf89afa04[m
+Author: Ryoma-py <samidare.sjk@gmail.com>
+Date:   Sun Sep 14 08:14:30 2025 +0900
+
+    最初のコミット
