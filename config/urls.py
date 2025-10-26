@@ -19,7 +19,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from base.views.landing_views import landing_page
-from base.views.home_views import home_page, restaurant_search_view
+from base.views.home_views import home_page  # , restaurant_search_view
 from base.views.restaurant_views import (
     restaurant_list,
     restaurant_detail,
@@ -31,14 +31,15 @@ from base.views.reservation_views import (
     reservation_cancel,
 )
 from base.views.subscription_views import (
-    subscribe_page,
-    subscribe_action,
-    cancel_subscription_action,
+    subscribe_register,
+    subscribe_success,
+    subscribe_edit,
+    subscribe_cancel,
 )
 
 from base.views.mypage_views import (
     mypage,
-    reservation_history,
+    # reservation_history,
     review_history,
     favorite_list,
     account_delete_confirm,
@@ -61,13 +62,10 @@ urlpatterns = [
     path("", landing_page, name="landing"),
     path("home/", home_page, name="home"),
     # サブスク関連
-    path("pages/subscribe/", subscribe_page, name="subscribe"),
-    path("subscribe/join/", subscribe_action, name="subscribe_action"),
-    path(
-        "subscribe/cancel/",
-        cancel_subscription_action,
-        name="cancel_subscription_action",
-    ),
+    path("accounts/subscribe-register/", subscribe_register, name="subscribe_register"),
+    path("accounts/subscribe-success/", subscribe_success, name="subscribe_success"),
+    path("accounts/subscribe-edit/", subscribe_edit, name="subscribe_edit"),
+    path("accounts/subscribe-cancel/", subscribe_cancel, name="subscribe_cancel"),
     # 検索
     # path("search_result/", restaurant_search_view, name="search_result"),
     # マイページ関連

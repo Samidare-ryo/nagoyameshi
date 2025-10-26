@@ -1,41 +1,55 @@
-# nagoyameshi/base/views/review_views.py
+# nagoyameshi/base/views/subscription_views.py
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from base.services.subscription_service import (
-    create_subscription,
-    cancel_subscription,
-    get_latest_subscription,
-    get_subscription_history,
-    is_subscribed,
+    create_stripe_checkout_session,
+    retrieve_stripe_session,
+    create_stripe_billing_portal_session,
+    cancel_stripe_subscription,
 )
 
 
-@login_required
-def subscribe_page(request):
-    member_id = request.user.id
-    current = get_latest_subscription(member_id)
-    history = get_subscription_history(member_id)
-    context = {
-        "current_subscription": current,
-        "subscription_history": history,
-        "is_subscribed": is_subscribed(member_id),
-        "subscription_fee": 300,
-    }
-    return render(request, "pages/subscribe.html", context)
+PRICE_ID = "PRICE_ID"
 
 
 @login_required
-def subscribe_action(request):
+def subscribe_register(request):
     if request.method == "POST":
-        create_subscription(request.user.id, plan="basic")
-        return redirect("subscribe")
-    return redirect("subscribe")
+        url = create_stripe_checkout_session(
+            request.user.id,
+            price_id=PRICE_ID,
+            success_path="/accounts/subscribe-success/",
+            cancel_path="/accounts/subscribe-register/",
+        )
+        return redirect(url)
+    return render(request, "subscribe/subscribe_register.html")
 
 
 @login_required
-def cancel_subscription_action(request):
+def subscribe_success(request):
+    session_id = request.GET.get("session_id")
+    user_id = request.GET.get("user_id")
+    if not session_id or not user_id:
+        return HttpResponse("Invalid request", status=400)
+    retrieve_stripe_session(session_id, user_id)
+    return redirect("top_page")
+
+
+@login_required
+def subscribe_edit(request):
     if request.method == "POST":
-        cancel_subscription(request.user.id)
-        return redirect("subscribe")
-    return redirect("subscribe")
+        url = create_stripe_billing_portal_session(
+            request.user.id, return_path="/accounts/subscribe-success/"
+        )
+        return redirect(url)
+    return render(request, "subscribe/subscribe_edit.html", {"user": request.user})
+
+
+@login_required
+def subscribe_cancel(request):
+    if request.method == "POST":
+        cancel_stripe_subscription(request.user.id)
+        return redirect("top_page")
+    return render(request, "subscribe/subscribe_cancel.html", {"user": request.user})

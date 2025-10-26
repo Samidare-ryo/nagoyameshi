@@ -14,10 +14,11 @@ __all__ = [
     "Category",
     "Favorite",
     "Member",
+    "MembershipType",
     "Reservation",
     "Restaurant",
     "Review",
     "Tag",
-    "subscription_models",
-    "notification_models",
+    "Subscription",
+    "Notification",
 ]

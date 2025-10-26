@@ -64,6 +64,26 @@ class Member(AbstractUser):
     is_subscribed = models.BooleanField(default=False)
     subscription_expiry = models.DateTimeField(blank=True, null=True)
 
+    # Stripe情報
+    stripe_customer_id = models.CharField(
+        max_length=100, null=True, blank=True, verbose_name="StripeカスタマーID"
+    )
+    stripe_subscription_id = models.CharField(
+        max_length=100, null=True, blank=True, verbose_name="StripeサブスクリプションID"
+    )
+    stripe_card_last4 = models.CharField(
+        max_length=10, null=True, blank=True, verbose_name="Stripeカード下4桁"
+    )
+    stripe_card_brand = models.CharField(
+        max_length=20, null=True, blank=True, verbose_name="Stripeカードブランド"
+    )
+    stripe_card_exp_month = models.IntegerField(
+        default=0, verbose_name="Stripeカード有効月"
+    )
+    stripe_card_exp_year = models.IntegerField(
+        default=0, verbose_name="Stripeカード有効年"
+    )
+
     # 連絡先
     phone_number = models.CharField(
         max_length=20, blank=True, null=True, verbose_name="電話番号"

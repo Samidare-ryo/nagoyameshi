@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import environ  # 追記
-import os
+# import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -163,11 +163,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SITE_ID = 1
 # ログイン成功後のリダイレクト先を指定
 LOGIN_REDIRECT_URL = "/"
+
+
 # ユーザー認証にメールアドレスを使用
-ACCOUNT_LOGIN_METHODS = ["email"]
+ACCOUNT_LOGIN_METHODS = {"email"}
 
 # ユーザー登録にメールアドレスを必須にする
-ACCOUNT_SIGNUP_FIELDS = ["email", "username", "password1", "password2"]
+ACCOUNT_SIGNUP_FIELDS = {"email", "password1", "password2"}
+
 
 # 連続してログイン失敗できる回数を5回に制限
 ACCOUNT_RATE_LIMITS = {"login_failed": "5/300s"}
@@ -201,3 +204,10 @@ else:
         "EMAIL_HOST_PASSWORD"
     )  # メールパスワードはsecretsより
     DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+STRIPE_API_SECRET_KEY = "STRIPE_API_SECRET_KEY"
+STRIPE_PRICE_ID = "STRIPE_PRICE_ID"
+if DEBUG:
+    YOUR_DOMAIN = "http://127.0.0.1:8000"
+else:
+    YOUR_DOMAIN = "https://yuda-nagoyameshi-0caa0d116e84.herokuapp.com"
