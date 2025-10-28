@@ -14,12 +14,12 @@
     <p class="mb-3">会員ID: {{ user.id }}</p>
 
     {% if not user.subscribe %}
-      <a href="{% url 'subscribe' %}" class="inline-block bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition mb-2">
+      <a href="{% url 'subscribe_register' %}" class="inline-block bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition mb-2">
         サブスク契約へ
       </a>
     {% else %}
       <p class="mb-2">サブスク有効期限: {{ user.subscribe.expire_date }}</p>
-      <a href="{% url 'unsubscribe' %}" class="inline-block bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition mb-2">
+      <a href="{% url 'subscribe_cancel' %}" class="inline-block bg-accent2 text-white px-4 py-2 rounded-lg shadow hover:bg-accent2/80 transition mb-2">
         サブスク解約へ
       </a>
     {% endif %}

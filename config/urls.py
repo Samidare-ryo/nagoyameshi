@@ -62,10 +62,10 @@ urlpatterns = [
     path("", landing_page, name="landing"),
     path("home/", home_page, name="home"),
     # サブスク関連
-    path("accounts/subscribe-register/", subscribe_register, name="subscribe_register"),
-    path("accounts/subscribe-success/", subscribe_success, name="subscribe_success"),
-    path("accounts/subscribe-edit/", subscribe_edit, name="subscribe_edit"),
-    path("accounts/subscribe-cancel/", subscribe_cancel, name="subscribe_cancel"),
+    path("subscribe-register/", subscribe_register, name="subscribe_register"),
+    path("subscribe-success/", subscribe_success, name="subscribe_success"),
+    path("subscribe-edit/", subscribe_edit, name="subscribe_edit"),
+    path("subscribe-cancel/", subscribe_cancel, name="subscribe_cancel"),
     # 検索
     # path("search_result/", restaurant_search_view, name="search_result"),
     # マイページ関連

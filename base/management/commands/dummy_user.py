@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from faker import Faker
-import MeCab
-import ipadic
+import MeCab  # type: ignore
+import ipadic  # type: ignore
 from base.models.member_models import Member, MembershipType
 
 
