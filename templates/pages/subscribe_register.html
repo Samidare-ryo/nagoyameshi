@@ -1,40 +1,47 @@
 {# templates/pages/subscribe_register.html #}
 {% extends "base.html" %}
 {% load static %}
-{% block title %}NAGOYAMESHI{% endblock %}
+{% block title %}有料プラン登録 | NAGOYAMESHI{% endblock %}
 
 {% block content %}
-<main>
-  <div class="container nagoyameshi-container pb-5">
-    <div class="row justify-content-center">
-      <div class="col-xl-5 col-lg-6 col-md-8">
-        <nav class="my-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-          <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'top_page' %}">ホーム</a></li>
-            <li class="breadcrumb-item active" aria-current="page">有料プラン登録</li>
-          </ol>
-        </nav>
-        <h1 class="mb-3 text-center">有料プラン登録</h1>
-          <div class="card mb-4">
-            <div class="card-header text-center">有料プランの内容</div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">・前日までならいつでも予約可能</li>
-              <li class="list-group-item">・店舗をお好きなだけお気に入りに追加可能</li>
-              <li class="list-group-item">・レビューを全件閲覧可能</li>
-              <li class="list-group-item">・レビューを投稿可能</li>
-              <li class="list-group-item">・月額たったの300円</li>
-            </ul>
-          </div>
+<main class="bg-gradient-to-b from-blue-50 to-white min-h-screen py-10">
+  <div class="max-w-2xl mx-auto px-4">
+    
+    <!-- パンくず -->
+    <nav class="mb-6 text-sm text-gray-500" aria-label="breadcrumb">
+      <ol class="flex items-center space-x-2">
+        <li><a href="{% url 'home' %}" class="hover:text-accent transition">ホーム</a></li>
+        <li>/</li>
+        <li class="text-gray-700">有料プラン登録</li>
+      </ol>
+    </nav>
 
-          <div class="mb-3 text-center">
-            <form action="{% url 'subscribe_register' %}" method="POST">
-              {% csrf_token %}
-              <button class="btn btn-primary text-white shadow-sm w-50" type="submit">有料プランに申し込む</button>
-            </form>
-          </div>
-        
-      </div>
+    <!-- タイトル -->
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">有料プラン登録</h1>
+
+    <!-- プラン内容カード -->
+    <div class="bg-white rounded-2xl shadow-md p-6 mb-8 border border-blue-100">
+      <h2 class="text-xl font-semibold text-accent2 text-center mb-4">有料プランの内容</h2>
+      <ul class="space-y-2 text-gray-700">
+        <li class="flex items-start"><span class="text-accent2 mr-2">・</span>前日までならいつでも予約可能</li>
+        <li class="flex items-start"><span class="text-accent2 mr-2">・</span>店舗をお好きなだけお気に入りに追加可能</li>
+        <li class="flex items-start"><span class="text-accent2 mr-2">・</span>レビューを全件閲覧可能</li>
+        <li class="flex items-start"><span class="text-accent2 mr-2">・</span>レビューを投稿可能</li>
+        <li class="flex items-start font-semibold text-accent"><span class="text-accent2 mr-2">・</span>月額たったの300円（税込）</li>
+      </ul>
     </div>
+
+    <!-- 申し込みボタン -->
+    <form action="{% url 'subscribe_register' %}" method="POST" class="text-center">
+      {% csrf_token %}
+      <button
+        type="submit"
+        class="bg-accent2 hover:bg-accent2/80 text-white font-semibold py-3 px-10 rounded-2xl shadow-lg transition duration-300"
+      >
+        有料プランに申し込む
+      </button>
+    </form>
+
   </div>
 </main>
 {% endblock %}

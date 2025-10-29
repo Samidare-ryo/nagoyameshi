@@ -1,77 +1,52 @@
 {# templates/pages/subscribe_edit.html #}
 {% extends "base.html" %}
 {% load static %}
-{% block title %}NAGOYAMESHI{% endblock %}
+{% block title %}お支払い方法 | NAGOYAMESHI{% endblock %}
+
 {% block content %}
+<main class="py-8 bg-gray-50 min-h-screen">
+  <div class="container mx-auto px-4 md:px-0">
+    <div class="max-w-2xl mx-auto">
 
-<main>
-  <div class="container nagoyameshi-container pb-5">
-    <div class="row justify-content-center">
-      <div class="col-xl-5 col-lg-6 col-md-8">
-        <nav class="my-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-          <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'top_page' %}">ホーム</a></li>
-            <li class="breadcrumb-item active" aria-current="page">お支払い方法</li>
-          </ol>
-        </nav>
-        <h1 class="mb-3 text-center" id="test">お支払い方法</h1>
-        <div class="card mb-4">
-          <div class="card-header text-center">現在のサブスクリプション情報</div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">カード種類 : {{user.stripe_card_brand}}</li>
-            <li class="list-group-item">カード番号 : **** **** **** {{user.stripe_card_last4}}</li>
-            <li class="list-group-item">カード有効期限 : {{user.stripe_card_exp_month|stringformat:"02d"}} / {{user.stripe_card_exp_year}}</li>
-          </ul>
-        </div>
-         
-        <p class="mb-3 text-left" id="edit">下記変更ボタンを押下し、決済情報変更画面でクレジットカード情報変更後、画面左の”新規ビジネスに戻る”リンクをクリックして下さい</p>
-        
-        <form id="card-form" method="post" enctype='multipart/form-data'>
-          {% csrf_token %}
+      <!-- パンくず -->
+      <nav class="mb-6 text-sm text-gray-500" aria-label="breadcrumb">
+        <ol class="flex items-center space-x-2">
+          <li><a href="{% url 'top_page' %}" class="hover:text-accent transition">ホーム</a></li>
+          <li>/</li>
+          <li class="text-gray-700">お支払い方法</li>
+        </ol>
+      </nav>
 
-          <div class="d-flex justify-content-center">
-            <button class="btn btn-primary text-white shadow-smw-50" id="card-button">変更</button>
-          </div>
-        </form>
+      <!-- タイトル -->
+      <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">お支払い方法</h1>
+
+      <!-- サブスクリプション情報 -->
+      <div class="bg-white rounded-2xl shadow mb-6 overflow-hidden">
+        <div class="bg-accent text-white text-center font-semibold py-3">現在のサブスクリプション情報</div>
+        <ul class="divide-y divide-gray-200 text-sm text-gray-700">
+          <li class="p-3">カード種類 : {{ user.stripe_card_brand }}</li>
+          <li class="p-3">カード番号 : **** **** **** {{ user.stripe_card_last4 }}</li>
+          <li class="p-3">カード有効期限 : {{ user.stripe_card_exp_month|stringformat:"02d" }} / {{ user.stripe_card_exp_year }}</li>
+        </ul>
       </div>
-    </div>
-  </div>
-</main>
-{% endblock %}}
-{% load static %}
-{% block title %}NAGOYAMESHI{% endblock %}
-{% block content %}
 
-<main>
-  <div class="container nagoyameshi-container pb-5">
-    <div class="row justify-content-center">
-      <div class="col-xl-5 col-lg-6 col-md-8">
-        <nav class="my-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-          <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'top_page' %}">ホーム</a></li>
-            <li class="breadcrumb-item active" aria-current="page">お支払い方法</li>
-          </ol>
-        </nav>
-        <h1 class="mb-3 text-center" id="test">お支払い方法</h1>
-        <div class="card mb-4">
-          <div class="card-header text-center">現在のサブスクリプション情報</div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">カード種類 : {{user.stripe_card_brand}}</li>
-            <li class="list-group-item">カード番号 : **** **** **** {{user.stripe_card_last4}}</li>
-            <li class="list-group-item">カード有効期限 : {{user.stripe_card_exp_month|stringformat:"02d"}} / {{user.stripe_card_exp_year}}</li>
-          </ul>
-        </div>
-         
-        <p class="mb-3 text-left" id="edit">下記変更ボタンを押下し、決済情報変更画面でクレジットカード情報変更後、画面左の”新規ビジネスに戻る”リンクをクリックして下さい</p>
-        
-        <form id="card-form" method="post" enctype='multipart/form-data'>
-          {% csrf_token %}
-
-          <div class="d-flex justify-content-center">
-            <button class="btn btn-primary text-white shadow-smw-50" id="card-button">変更</button>
-          </div>
-        </form>
+      <!-- 注意書き -->
+      <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-lg mb-6">
+        <p class="text-gray-700 text-sm leading-relaxed">
+          下記「変更」ボタンを押下すると、Stripeの決済情報変更画面に移動します。<br>
+          クレジットカード情報を変更後、画面左上の「新規ビジネスに戻る」リンクをクリックしてください。
+        </p>
       </div>
+
+      <!-- 変更ボタン -->
+      <form id="card-form" method="post" class="text-center">
+        {% csrf_token %}
+        <button type="submit"
+          class="w-1/2 bg-accent hover:bg-accent2 text-white font-semibold py-2.5 rounded-xl shadow-md transition">
+          変更
+        </button>
+      </form>
+
     </div>
   </div>
 </main>
