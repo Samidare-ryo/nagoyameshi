@@ -1,8 +1,69 @@
 {# templates/pages/restaurant_list.html #}
 {% extends "base.html" %}
 
+
 {% block main %}
-<div>
-    {{restaurant.name}}
+<div class="max-w-5xl mx-auto my-10 px-4">
+
+  <h1 class="text-3xl font-bold mb-6 text-accent2">店舗一覧</h1>
+
+  <!-- 🔍 検索フォーム -->
+  <form method="get" class="mb-6 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+    <input
+      type="text"
+      name="q"
+      value="{{ query }}"
+      placeholder="店舗名・住所・説明で検索"
+      class="flex-grow border rounded-lg px-4 py-2 focus:ring-2 focus:ring-accent2"
+    />
+    <select name="sort" class="border rounded-lg px-3 py-2">
+      <option value="rating" {% if sort == "rating" %}selected{% endif %}>評価が高い順</option>
+      <option value="updated" {% if sort == "updated" %}selected{% endif %}>更新日が新しい順</option>
+      <option value="name" {% if sort == "name" %}selected{% endif %}>店舗名順</option>
+    </select>
+    <button
+      type="submit"
+      class="px-4 py-2 rounded-lg bg-accent2 text-white font-semibold shadow hover:bg-accent2/80 transition"
+    >
+      検索
+    </button>
+  </form>
+
+  {% if restaurants %}
+    <!-- 📜 結果一覧（スクロール付き） -->
+    <div class="h-[600px] overflow-y-scroll border-t border-gray-300 pt-4 space-y-4">
+      {% for restaurant in restaurants %}
+        <div class="bg-white p-4 rounded-lg shadow flex justify-between items-center border border-gray-200">
+          <div>
+            <h2 class="text-lg font-semibold text-gray-800">{{ restaurant.name }}</h2>
+            {% if restaurant.rating %}
+              <p class="text-sm text-yellow-600 font-semibold">評価: ★{{ restaurant.rating|floatformat:1 }}</p>
+            {% endif %}
+            {% if restaurant.address %}
+              <p class="text-sm text-gray-500">住所: {{ restaurant.address }}</p>
+            {% endif %}
+            <p class="text-xs text-gray-400">最終更新: {{ restaurant.updated_at|date:"Y/m/d H:i" }}</p>
+          </div>
+
+          <div class="flex gap-2">
+            <a href="{% url 'restaurant_detail' restaurant.id %}"
+               class="px-4 py-2 rounded-lg bg-accent2 text-white text-sm font-semibold shadow hover:bg-accent2/80 transition">
+              詳細
+            </a>
+            <form method="post" action="{% url 'favorite_toggle' restaurant.id %}">
+              {% csrf_token %}
+              <button type="submit"
+                      class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-semibold shadow hover:bg-red-600 transition">
+                お気に入り
+              </button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-center text-gray-500 mt-6">該当する店舗は見つかりませんでした。</p>
+  {% endif %}
+
 </div>
 {% endblock %}

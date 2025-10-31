@@ -1,9 +1,7 @@
 # nagoyameshi/base/services/search_service.py
-from django.db.models import Q, Avg
+from django.db.models import Q
 from django.core.paginator import Paginator
 from base.models.restaurant_models import Restaurant
-from base.models.category_models import Category
-from base.models.review_models import Review
 
 
 def _build_search_queryset(params):
@@ -27,8 +25,9 @@ def _build_search_queryset(params):
 
     qs = qs.filter(filters)
 
+    """ 評価によるソートをコメントアウト
     # 平均評価
-    qs = qs.annotate(avg_rating=Avg("review__rating"))
+    qs = qs.annotate(avg_rating=Avg("reviews__rating"))
 
     # ソート順
     sort_by = params.get("sort_by", "rating")
@@ -37,6 +36,9 @@ def _build_search_queryset(params):
     elif sort_by == "updated":
         qs = qs.order_by("-updated_at", "-avg_rating")
 
+    return qs
+    """
+    qs = qs.order_by("-updated_at")
     return qs
 
 

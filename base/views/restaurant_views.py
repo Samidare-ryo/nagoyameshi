@@ -2,10 +2,10 @@
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models import Q
 from base.models.restaurant_models import Restaurant
 from base.services.restaurant_service import list_restaurants, get_restaurant_details
 from base.services.favorite_service import toggle_favorite
-
 from base.utils.decorators import subscribe_required
 
 """
